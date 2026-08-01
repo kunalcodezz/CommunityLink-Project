@@ -22,7 +22,8 @@ export const StudentDashboard = () => {
     missions, 
     badges, 
     certificates, 
-    submitMissionProof 
+    submitMissionProof,
+    openStudentSetupModal
   } = useApp();
 
   const [selectedCertificate, setSelectedCertificate] = useState(null);
@@ -70,18 +71,61 @@ export const StudentDashboard = () => {
                 <Star size={12} fill="#c084fc" /> {studentProfile.level}
               </span>
             </div>
-            <p style={{ fontSize: '0.9rem', color: 'var(--text-muted)' }}>{studentProfile.college} • {studentProfile.email}</p>
+            <p style={{ fontSize: '0.9rem', color: 'var(--text-muted)' }}>{studentProfile.college || 'College N/A'} • {studentProfile.email}</p>
           </div>
         </div>
 
+        {/* Edit Student Info Button */}
+        <button
+          onClick={openStudentSetupModal}
+          className="btn btn-secondary btn-sm"
+          style={{ gap: '0.4rem', fontWeight: 700 }}
+        >
+          ✏️ Edit Academic Profile
+        </button>
+
         {/* Level XP Progress Bar */}
-        <div style={{ minWidth: '260px', flex: 1, maxWidth: '400px' }}>
+        <div style={{ minWidth: '260px', flex: 1, maxWidth: '350px' }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.85rem', marginBottom: '0.4rem', fontWeight: 600 }}>
             <span>XP Progress to 'Leader'</span>
             <span style={{ color: 'var(--primary)' }}>{studentProfile.xp} / {nextLevelXp} XP</span>
           </div>
           <div style={{ width: '100%', height: '10px', background: 'rgba(255,255,255,0.1)', borderRadius: 'var(--radius-full)', overflow: 'hidden' }}>
             <div style={{ width: `${xpPercentage}%`, height: '100%', background: 'linear-gradient(90deg, #3b82f6, #8b5cf6)', borderRadius: 'var(--radius-full)', transition: 'width 0.5s ease' }} />
+          </div>
+        </div>
+      </div>
+
+      {/* Student Academic Details Card */}
+      <div className="glass-card" style={{ padding: '1.25rem 1.5rem', background: 'var(--bg-secondary)' }}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem', borderBottom: '1px solid var(--border-color)', paddingBottom: '0.75rem' }}>
+          <h3 style={{ fontSize: '1.1rem', fontWeight: 800, display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+            🎓 Student Academic & Personal Info
+          </h3>
+          <button onClick={openStudentSetupModal} className="btn btn-outline btn-sm" style={{ fontSize: '0.8rem' }}>
+            Update Details
+          </button>
+        </div>
+
+        <div className="grid-4" style={{ gap: '1rem' }}>
+          <div style={{ background: 'var(--bg-primary)', padding: '0.85rem 1rem', borderRadius: 'var(--radius-md)', border: '1px solid var(--border-color)' }}>
+            <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)', fontWeight: 600, display: 'block' }}>Full Name</span>
+            <strong style={{ fontSize: '0.95rem', color: 'var(--text-main)' }}>{studentProfile.name || 'Not provided'}</strong>
+          </div>
+
+          <div style={{ background: 'var(--bg-primary)', padding: '0.85rem 1rem', borderRadius: 'var(--radius-md)', border: '1px solid var(--border-color)' }}>
+            <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)', fontWeight: 600, display: 'block' }}>Date of Birth (DOB)</span>
+            <strong style={{ fontSize: '0.95rem', color: 'var(--primary)' }}>{studentProfile.dob || '15/05/2004'}</strong>
+          </div>
+
+          <div style={{ background: 'var(--bg-primary)', padding: '0.85rem 1rem', borderRadius: 'var(--radius-md)', border: '1px solid var(--border-color)' }}>
+            <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)', fontWeight: 600, display: 'block' }}>College / University</span>
+            <strong style={{ fontSize: '0.95rem', color: 'var(--accent-emerald)' }}>{studentProfile.college || 'VJTI Mumbai'}</strong>
+          </div>
+
+          <div style={{ background: 'var(--bg-primary)', padding: '0.85rem 1rem', borderRadius: 'var(--radius-md)', border: '1px solid var(--border-color)' }}>
+            <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)', fontWeight: 600, display: 'block' }}>Education Level</span>
+            <strong style={{ fontSize: '0.95rem', color: 'var(--accent-purple)' }}>{studentProfile.education || 'B.Tech / B.E.'}</strong>
           </div>
         </div>
       </div>

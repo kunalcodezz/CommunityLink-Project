@@ -7,31 +7,221 @@ import {
   initialPosts,
   initialCertificates
 } from '../data/initialData';
+import { 
+  auth, 
+  googleProvider, 
+  signInWithEmailAndPassword, 
+  createUserWithEmailAndPassword, 
+  signInWithPopup, 
+  signOut as firebaseSignOut, 
+  onAuthStateChanged,
+  updateProfile
+} from '../firebase/firebaseConfig';
 
 const AppContext = createContext();
 
 export const AppProvider = ({ children }) => {
-  // Active User Persona
-  const [currentUserRole, setCurrentUserRole] = useState('student'); // 'student' | 'ngo' | 'resident' | 'admin'
-
-  const [studentProfile, setStudentProfile] = useState({
-    name: "Aarav Sharma",
-    email: "aarav.sharma@vjti.ac.in",
-    college: "VJTI Mumbai",
-    xp: 450,
-    level: "Volunteer", // Beginner (0-100), Helper (101-300), Volunteer (301-600), Leader (601-1000), Ambassador (1001-1500), Community Hero (1500+)
-    hoursLogged: 16,
-    badges: ["b-1", "b-2"],
-    joinedMissions: ["m-1"],
-    submittedProofs: [
-      {
-        missionId: "m-1",
-        proofImage: "https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?w=600&auto=format&fit=crop&q=80",
-        notes: "Gathered 4 bags of plastic and planted 2 neem saplings with team B.",
-        status: "approved"
-      }
-    ]
+  // Auth & Active User Persona
+  const [isLoggedIn, setIsLoggedIn] = useState(() => {
+    const saved = localStorage.getItem('cl_isLoggedIn');
+    return saved === 'true';
   });
+  const [currentUserRole, setCurrentUserRole] = useState(() => {
+    const savedRole = localStorage.getItem('cl_role');
+    return savedRole || 'student';
+  }); // 'student' | 'ngo' | 'resident' | 'admin'
+
+  const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
+  const [targetTabAfterLogin, setTargetTabAfterLogin] = useState(null);
+  const [firebaseUser, setFirebaseUser] = useState(null);
+  const [authLoading, setAuthLoading] = useState(true);
+
+  // Subscribe to Firebase Auth state changes
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        setFirebaseUser(user);
+        setIsLoggedIn(true);
+        localStorage.setItem('cl_isLoggedIn', 'true');
+        const userDisplayName = user.displayName || user.email?.split('@')[0] || 'Authenticated User';
+        const userEmail = user.email || 'user@firebase.auth';
+        
+        // Dynamically populate user profiles strictly from authenticated Firebase session
+        setStudentProfile(prev => ({ 
+          ...prev, 
+          name: userDisplayName, 
+          email: userEmail 
+        }));
+        setNgoProfile(prev => ({
+          ...prev,
+          name: userDisplayName.includes('NGO') ? userDisplayName : `${userDisplayName} Org`,
+          contactEmail: userEmail
+        }));
+      } else {
+        setFirebaseUser(null);
+        setIsLoggedIn(false);
+        localStorage.setItem('cl_isLoggedIn', 'false');
+      }
+      setAuthLoading(false);
+    });
+    return () => unsubscribe();
+  }, []);
+
+  const login = (role = 'student') => {
+    setCurrentUserRole(role);
+    setIsLoggedIn(true);
+    localStorage.setItem('cl_isLoggedIn', 'true');
+    localStorage.setItem('cl_role', role);
+    addNotification("Logged In", `Authenticated via Firebase as ${role.toUpperCase()}.`);
+  };
+
+  const logout = async () => {
+    try {
+      await firebaseSignOut(auth);
+    } catch (e) {
+      console.warn("Firebase sign out:", e);
+    }
+    setFirebaseUser(null);
+    setIsLoggedIn(false);
+    localStorage.setItem('cl_isLoggedIn', 'false');
+    addNotification("Logged Out", "You have signed out of Firebase.");
+  };
+
+  // Firebase Auth Helper Methods (Strict Firebase Only, No Mock Fallbacks)
+  const firebaseSignIn = async (email, password, role = 'student') => {
+    setAuthLoading(true);
+    try {
+      const res = await signInWithEmailAndPassword(auth, email, password);
+      setFirebaseUser(res.user);
+      login(role);
+      return { success: true, user: res.user };
+    } catch (err) {
+      console.error("Firebase Auth sign in error:", err);
+      let friendlyError = err.message;
+      if (err.code === 'auth/invalid-credential' || err.code === 'auth/user-not-found' || err.code === 'auth/wrong-password') {
+        friendlyError = 'Invalid Firebase Auth email or password. Please check your credentials or register a new account.';
+      } else if (err.code === 'auth/invalid-email') {
+        friendlyError = 'Please provide a valid email address.';
+      }
+      throw new Error(friendlyError);
+    } finally {
+      setAuthLoading(false);
+    }
+  };
+
+  const firebaseSignUp = async (email, password, displayName, role = 'student') => {
+    setAuthLoading(true);
+    try {
+      const res = await createUserWithEmailAndPassword(auth, email, password);
+      if (displayName) {
+        await updateProfile(res.user, { displayName });
+      }
+      setFirebaseUser(res.user);
+      login(role);
+      return { success: true, user: res.user };
+    } catch (err) {
+      console.error("Firebase Auth sign up error:", err);
+      let friendlyError = err.message;
+      if (err.code === 'auth/email-already-in-use') {
+        friendlyError = 'This email is already registered in Firebase. Please sign in instead.';
+      } else if (err.code === 'auth/weak-password') {
+        friendlyError = 'Password should be at least 6 characters long.';
+      } else if (err.code === 'auth/invalid-email') {
+        friendlyError = 'Please enter a valid email address.';
+      }
+      throw new Error(friendlyError);
+    } finally {
+      setAuthLoading(false);
+    }
+  };
+
+  const [isRoleSelectionModalOpen, setIsRoleSelectionModalOpen] = useState(false);
+  const [pendingGoogleUser, setPendingGoogleUser] = useState(null);
+
+  const firebaseGoogleSignIn = async (initialRole = 'student') => {
+    setAuthLoading(true);
+    try {
+      const res = await signInWithPopup(auth, googleProvider);
+      setFirebaseUser(res.user);
+      setPendingGoogleUser(res.user);
+      setIsRoleSelectionModalOpen(true);
+      return { success: true, user: res.user, requiresRoleSelection: true };
+    } catch (err) {
+      console.error("Firebase Google Auth error:", err);
+      throw new Error(err.message || 'Google Authentication failed');
+    } finally {
+      setAuthLoading(false);
+    }
+  };
+
+  const confirmGoogleUserRole = (chosenRole) => {
+    login(chosenRole);
+    if (chosenRole === 'student') {
+      const userDisplayName = pendingGoogleUser?.displayName || firebaseUser?.displayName || 'Student User';
+      const userEmail = pendingGoogleUser?.email || firebaseUser?.email || '';
+      setStudentProfile(prev => ({
+        ...prev,
+        name: userDisplayName,
+        email: userEmail
+      }));
+      openStudentSetupModal();
+    }
+    setIsRoleSelectionModalOpen(false);
+  };
+
+  const closeRoleSelectionModal = () => {
+    setIsRoleSelectionModalOpen(false);
+  };
+
+
+  const openAuthModal = (targetTab = null) => {
+    setTargetTabAfterLogin(targetTab);
+    setIsAuthModalOpen(true);
+  };
+
+  const closeAuthModal = () => {
+    setIsAuthModalOpen(false);
+  };
+
+  const [studentProfile, setStudentProfile] = useState(() => {
+    const saved = localStorage.getItem('cl_studentProfile');
+    return saved ? JSON.parse(saved) : {
+      name: "Aarav Sharma",
+      email: "aarav.sharma@vjti.ac.in",
+      dob: "2004-05-15",
+      college: "VJTI Mumbai",
+      education: "B.Tech Computer Engineering",
+      isSetupComplete: true,
+      xp: 450,
+      level: "Volunteer",
+      hoursLogged: 16,
+      badges: ["b-1", "b-2"],
+      joinedMissions: ["m-1"],
+      submittedProofs: [
+        {
+          missionId: "m-1",
+          proofImage: "https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?w=600&auto=format&fit=crop&q=80",
+          notes: "Gathered 4 bags of plastic and planted 2 neem saplings with team B.",
+          status: "approved"
+        }
+      ]
+    };
+  });
+
+  const [isStudentSetupModalOpen, setIsStudentSetupModalOpen] = useState(false);
+
+  const updateStudentProfile = (updatedFields) => {
+    setStudentProfile(prev => {
+      const updated = { ...prev, ...updatedFields };
+      localStorage.setItem('cl_studentProfile', JSON.stringify(updated));
+      return updated;
+    });
+    addNotification("Profile Updated", "Student details (Full Name, DOB, College, Education) saved.");
+  };
+
+  const openStudentSetupModal = () => setIsStudentSetupModalOpen(true);
+  const closeStudentSetupModal = () => setIsStudentSetupModalOpen(false);
+
 
   const [ngoProfile, setNgoProfile] = useState({
     id: "ngo-1",
@@ -295,7 +485,28 @@ export const AppProvider = ({ children }) => {
       value={{
         currentUserRole,
         setCurrentUserRole,
+        isLoggedIn,
+        login,
+        logout,
+        firebaseUser,
+        authLoading,
+        firebaseSignIn,
+        firebaseSignUp,
+        firebaseGoogleSignIn,
+        isAuthModalOpen,
+        openAuthModal,
+        closeAuthModal,
+
+        targetTabAfterLogin,
         studentProfile,
+        updateStudentProfile,
+        isStudentSetupModalOpen,
+        openStudentSetupModal,
+        closeStudentSetupModal,
+        isRoleSelectionModalOpen,
+        pendingGoogleUser,
+        confirmGoogleUserRole,
+        closeRoleSelectionModal,
         ngoProfile,
         missions,
         badges: initialBadges,

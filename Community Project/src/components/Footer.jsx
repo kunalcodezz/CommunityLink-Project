@@ -23,15 +23,17 @@ export const Footer = () => {
         
         {/* Brand Info */}
         <div>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', marginBottom: '1rem' }}>
-            <div style={{
-              background: 'linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%)',
-              padding: '0.4rem',
-              borderRadius: 'var(--radius-sm)',
-              color: '#fff'
-            }}>
-              <HeartHandshake size={20} />
-            </div>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.65rem', marginBottom: '1rem' }}>
+            <img 
+              src="/logo.png" 
+              alt="CommunityLink Logo" 
+              style={{
+                height: '36px',
+                width: 'auto',
+                borderRadius: 'var(--radius-sm)',
+                objectFit: 'contain'
+              }}
+            />
             <h3 style={{ fontSize: '1.2rem', fontWeight: 800 }}>CommunityLink</h3>
           </div>
           <p style={{ fontSize: '0.88rem', color: 'var(--text-muted)', lineHeight: 1.6 }}>
