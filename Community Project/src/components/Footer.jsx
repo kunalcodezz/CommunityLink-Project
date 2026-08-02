@@ -7,8 +7,9 @@ export const Footer = () => {
 
   return (
     <footer style={{
-      background: 'var(--bg-secondary)',
-      borderTop: '1px solid var(--border-color)',
+      background: 'var(--bg-primary)',
+      borderTop: '1px solid rgba(255, 255, 255, 0.8)',
+      boxShadow: 'var(--shadow-neu-lg)',
       padding: '3rem 1.5rem 1.5rem 1.5rem',
       marginTop: 'auto'
     }}>
@@ -31,10 +32,11 @@ export const Footer = () => {
                 height: '36px',
                 width: 'auto',
                 borderRadius: 'var(--radius-sm)',
-                objectFit: 'contain'
+                objectFit: 'contain',
+                boxShadow: 'var(--shadow-neu-sm)'
               }}
             />
-            <h3 style={{ fontSize: '1.2rem', fontWeight: 800 }}>CommunityLink</h3>
+            <h3 style={{ fontSize: '1.2rem', fontWeight: 800, color: 'var(--text-main)' }}>CommunityLink</h3>
           </div>
           <p style={{ fontSize: '0.88rem', color: 'var(--text-muted)', lineHeight: 1.6 }}>
             Bridging college students, local NGOs, and residents to create verifiable community impact through gamification, interactive mapping, and automated certificates.

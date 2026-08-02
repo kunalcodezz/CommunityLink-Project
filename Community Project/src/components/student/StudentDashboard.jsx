@@ -50,8 +50,7 @@ export const StudentDashboard = () => {
       
       {/* Student Banner Header */}
       <div className="glass-card" style={{
-        background: 'linear-gradient(135deg, rgba(30, 41, 59, 0.9) 0%, rgba(15, 23, 42, 0.95) 100%)',
-        borderLeft: '4px solid var(--primary)',
+        background: 'var(--bg-primary)',
         display: 'flex',
         justifyContent: 'space-between',
         alignItems: 'center',
@@ -62,16 +61,23 @@ export const StudentDashboard = () => {
           <img
             src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80"
             alt="Student Avatar"
-            style={{ width: '70px', height: '70px', borderRadius: '50%', objectFit: 'cover', border: '3px solid var(--primary)' }}
+            style={{ 
+              width: '70px', 
+              height: '70px', 
+              borderRadius: 'var(--radius-md)', 
+              objectFit: 'cover', 
+              boxShadow: 'var(--shadow-neu-sm)',
+              border: '1px solid rgba(255, 255, 255, 0.8)'
+            }}
           />
           <div>
             <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem' }}>
-              <h2 style={{ fontSize: '1.5rem', fontWeight: 800 }}>{studentProfile.name}</h2>
+              <h2 style={{ fontSize: '1.5rem', fontWeight: 900, color: 'var(--text-main)' }}>{studentProfile.name}</h2>
               <span className="badge badge-purple">
-                <Star size={12} fill="#c084fc" /> {studentProfile.level}
+                <Star size={12} fill="#FFFFFF" /> {studentProfile.level}
               </span>
             </div>
-            <p style={{ fontSize: '0.9rem', color: 'var(--text-muted)' }}>{studentProfile.college || 'College N/A'} • {studentProfile.email}</p>
+            <p style={{ fontSize: '0.9rem', color: 'var(--text-muted)', fontWeight: 600 }}>{studentProfile.college || 'College N/A'} • {studentProfile.email}</p>
           </div>
         </div>
 
@@ -79,25 +85,40 @@ export const StudentDashboard = () => {
         <button
           onClick={openStudentSetupModal}
           className="btn btn-secondary btn-sm"
-          style={{ gap: '0.4rem', fontWeight: 700 }}
+          style={{ gap: '0.4rem', fontWeight: 800 }}
         >
           ✏️ Edit Academic Profile
         </button>
 
         {/* Level XP Progress Bar */}
         <div style={{ minWidth: '260px', flex: 1, maxWidth: '350px' }}>
-          <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.85rem', marginBottom: '0.4rem', fontWeight: 600 }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.85rem', marginBottom: '0.4rem', fontWeight: 800 }}>
             <span>XP Progress to 'Leader'</span>
             <span style={{ color: 'var(--primary)' }}>{studentProfile.xp} / {nextLevelXp} XP</span>
           </div>
-          <div style={{ width: '100%', height: '10px', background: 'rgba(255,255,255,0.1)', borderRadius: 'var(--radius-full)', overflow: 'hidden' }}>
-            <div style={{ width: `${xpPercentage}%`, height: '100%', background: 'linear-gradient(90deg, #3b82f6, #8b5cf6)', borderRadius: 'var(--radius-full)', transition: 'width 0.5s ease' }} />
+          <div style={{ 
+            width: '100%', 
+            height: '16px', 
+            background: 'var(--bg-primary)', 
+            borderRadius: 'var(--radius-md)', 
+            overflow: 'hidden', 
+            boxShadow: 'var(--shadow-neu-inset)',
+            border: '1px solid rgba(203, 213, 225, 0.4)'
+          }}>
+            <div style={{ 
+              width: `${xpPercentage}%`, 
+              height: '100%', 
+              background: 'var(--accent)', 
+              borderRadius: 'var(--radius-md)',
+              boxShadow: '0 2px 6px rgba(245, 158, 11, 0.4)',
+              transition: 'width 0.5s ease' 
+            }} />
           </div>
         </div>
       </div>
 
       {/* Student Academic Details Card */}
-      <div className="glass-card" style={{ padding: '1.25rem 1.5rem', background: 'var(--bg-secondary)' }}>
+      <div className="glass-card" style={{ padding: '1.25rem 1.5rem' }}>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem', borderBottom: '1px solid var(--border-color)', paddingBottom: '0.75rem' }}>
           <h3 style={{ fontSize: '1.1rem', fontWeight: 800, display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
             🎓 Student Academic & Personal Info
@@ -108,22 +129,22 @@ export const StudentDashboard = () => {
         </div>
 
         <div className="grid-4" style={{ gap: '1rem' }}>
-          <div style={{ background: 'var(--bg-primary)', padding: '0.85rem 1rem', borderRadius: 'var(--radius-md)', border: '1px solid var(--border-color)' }}>
+          <div style={{ background: 'var(--bg-primary)', padding: '0.85rem 1rem', borderRadius: 'var(--radius-md)', boxShadow: 'var(--shadow-neu-inset)', border: '1px solid rgba(203, 213, 225, 0.4)' }}>
             <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)', fontWeight: 600, display: 'block' }}>Full Name</span>
             <strong style={{ fontSize: '0.95rem', color: 'var(--text-main)' }}>{studentProfile.name || 'Not provided'}</strong>
           </div>
 
-          <div style={{ background: 'var(--bg-primary)', padding: '0.85rem 1rem', borderRadius: 'var(--radius-md)', border: '1px solid var(--border-color)' }}>
+          <div style={{ background: 'var(--bg-primary)', padding: '0.85rem 1rem', borderRadius: 'var(--radius-md)', boxShadow: 'var(--shadow-neu-inset)', border: '1px solid rgba(203, 213, 225, 0.4)' }}>
             <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)', fontWeight: 600, display: 'block' }}>Date of Birth (DOB)</span>
             <strong style={{ fontSize: '0.95rem', color: 'var(--primary)' }}>{studentProfile.dob || '15/05/2004'}</strong>
           </div>
 
-          <div style={{ background: 'var(--bg-primary)', padding: '0.85rem 1rem', borderRadius: 'var(--radius-md)', border: '1px solid var(--border-color)' }}>
+          <div style={{ background: 'var(--bg-primary)', padding: '0.85rem 1rem', borderRadius: 'var(--radius-md)', boxShadow: 'var(--shadow-neu-inset)', border: '1px solid rgba(203, 213, 225, 0.4)' }}>
             <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)', fontWeight: 600, display: 'block' }}>College / University</span>
             <strong style={{ fontSize: '0.95rem', color: 'var(--accent-emerald)' }}>{studentProfile.college || 'VJTI Mumbai'}</strong>
           </div>
 
-          <div style={{ background: 'var(--bg-primary)', padding: '0.85rem 1rem', borderRadius: 'var(--radius-md)', border: '1px solid var(--border-color)' }}>
+          <div style={{ background: 'var(--bg-primary)', padding: '0.85rem 1rem', borderRadius: 'var(--radius-md)', boxShadow: 'var(--shadow-neu-inset)', border: '1px solid rgba(203, 213, 225, 0.4)' }}>
             <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)', fontWeight: 600, display: 'block' }}>Education Level</span>
             <strong style={{ fontSize: '0.95rem', color: 'var(--accent-purple)' }}>{studentProfile.education || 'B.Tech / B.E.'}</strong>
           </div>
@@ -133,7 +154,7 @@ export const StudentDashboard = () => {
       {/* Quick Metrics Grid */}
       <div className="grid-4">
         <div className="glass-card" style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
-          <div style={{ background: 'var(--primary-light)', padding: '0.85rem', borderRadius: 'var(--radius-md)', color: 'var(--primary)' }}>
+          <div style={{ background: 'var(--primary-light)', padding: '0.85rem', borderRadius: 'var(--radius-md)', color: 'var(--primary)', boxShadow: 'var(--shadow-neu-sm)' }}>
             <TrendingUp size={24} />
           </div>
           <div>
@@ -143,7 +164,7 @@ export const StudentDashboard = () => {
         </div>
 
         <div className="glass-card" style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
-          <div style={{ background: 'var(--accent-emerald-light)', padding: '0.85rem', borderRadius: 'var(--radius-md)', color: 'var(--accent-emerald)' }}>
+          <div style={{ background: 'var(--accent-emerald-light)', padding: '0.85rem', borderRadius: 'var(--radius-md)', color: 'var(--accent-emerald)', boxShadow: 'var(--shadow-neu-sm)' }}>
             <Clock size={24} />
           </div>
           <div>
@@ -153,7 +174,7 @@ export const StudentDashboard = () => {
         </div>
 
         <div className="glass-card" style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
-          <div style={{ background: 'var(--accent-amber-light)', padding: '0.85rem', borderRadius: 'var(--radius-md)', color: 'var(--accent-amber)' }}>
+          <div style={{ background: 'var(--accent-amber-light)', padding: '0.85rem', borderRadius: 'var(--radius-md)', color: 'var(--accent-amber)', boxShadow: 'var(--shadow-neu-sm)' }}>
             <Award size={24} />
           </div>
           <div>
@@ -163,7 +184,7 @@ export const StudentDashboard = () => {
         </div>
 
         <div className="glass-card" style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
-          <div style={{ background: 'var(--accent-purple-light)', padding: '0.85rem', borderRadius: 'var(--radius-md)', color: 'var(--accent-purple)' }}>
+          <div style={{ background: 'var(--accent-purple-light)', padding: '0.85rem', borderRadius: 'var(--radius-md)', color: 'var(--accent-purple)', boxShadow: 'var(--shadow-neu-sm)' }}>
             <FileText size={24} />
           </div>
           <div>
@@ -279,9 +300,9 @@ export const StudentDashboard = () => {
                 key={b.id} 
                 className="glass-card" 
                 style={{
-                  opacity: isUnlocked ? 1 : 0.5,
-                  border: isUnlocked ? '1px solid rgba(245, 158, 11, 0.4)' : '1px dashed var(--border-color)',
-                  textAlign: 'center'
+                  opacity: isUnlocked ? 1 : 0.6,
+                  textAlign: 'center',
+                  boxShadow: isUnlocked ? 'var(--shadow-neu-md)' : 'var(--shadow-neu-inset)'
                 }}
               >
                 <div style={{ fontSize: '2.5rem', marginBottom: '0.5rem' }}>{b.icon}</div>

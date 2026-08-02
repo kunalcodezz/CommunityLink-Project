@@ -22,7 +22,7 @@ export const RoleSelectionModal = ({ isOpen, onClose, pendingUser, onConfirmRole
       title: '🎓 Student Volunteer',
       subtitle: 'Join social drives, earn XP, badges & verified certificates.',
       icon: User,
-      color: '#3b82f6',
+      color: '#2563EB',
       badgeClass: 'badge-blue'
     },
     {
@@ -30,7 +30,7 @@ export const RoleSelectionModal = ({ isOpen, onClose, pendingUser, onConfirmRole
       title: '🤝 NGO Organization',
       subtitle: 'Create community drives, verify student work & issue certificates.',
       icon: HeartHandshake,
-      color: '#10b981',
+      color: '#22C55E',
       badgeClass: 'badge-emerald'
     },
     {
@@ -38,7 +38,7 @@ export const RoleSelectionModal = ({ isOpen, onClose, pendingUser, onConfirmRole
       title: '🏡 Local Resident',
       subtitle: 'Report civic issues, upvote local causes & connect with volunteers.',
       icon: Users,
-      color: '#f59e0b',
+      color: '#F59E0B',
       badgeClass: 'badge-amber'
     }
   ];
@@ -53,7 +53,7 @@ export const RoleSelectionModal = ({ isOpen, onClose, pendingUser, onConfirmRole
       <div 
         className="modal-content" 
         onClick={(e) => e.stopPropagation()}
-        style={{ maxWidth: '560px', padding: '2rem', position: 'relative' }}
+        style={{ maxWidth: '560px', padding: '2.25rem', position: 'relative' }}
       >
         {/* Close Button */}
         <button 
@@ -63,7 +63,7 @@ export const RoleSelectionModal = ({ isOpen, onClose, pendingUser, onConfirmRole
             top: '1.25rem',
             right: '1.25rem',
             background: 'var(--bg-primary)',
-            border: '1px solid var(--border-color)',
+            border: '1px solid rgba(255, 255, 255, 0.8)',
             color: 'var(--text-muted)',
             borderRadius: '50%',
             width: '36px',
@@ -71,7 +71,8 @@ export const RoleSelectionModal = ({ isOpen, onClose, pendingUser, onConfirmRole
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            cursor: 'pointer'
+            cursor: 'pointer',
+            boxShadow: 'var(--shadow-neu-sm)'
           }}
         >
           <X size={18} />
@@ -87,7 +88,7 @@ export const RoleSelectionModal = ({ isOpen, onClose, pendingUser, onConfirmRole
                 width: '64px',
                 height: '64px',
                 borderRadius: '50%',
-                border: '3px solid var(--primary)',
+                boxShadow: 'var(--shadow-neu-sm)',
                 marginBottom: '0.75rem',
                 objectFit: 'cover'
               }}
@@ -97,7 +98,8 @@ export const RoleSelectionModal = ({ isOpen, onClose, pendingUser, onConfirmRole
               width: '60px',
               height: '60px',
               borderRadius: '50%',
-              background: 'var(--primary-light)',
+              background: 'var(--bg-primary)',
+              boxShadow: 'var(--shadow-neu-sm)',
               color: 'var(--primary)',
               display: 'flex',
               alignItems: 'center',
@@ -112,7 +114,7 @@ export const RoleSelectionModal = ({ isOpen, onClose, pendingUser, onConfirmRole
             <ShieldCheck size={13} /> Google Authenticated
           </span>
 
-          <h3 style={{ fontSize: '1.5rem', fontWeight: 800, marginBottom: '0.25rem' }}>
+          <h3 style={{ fontSize: '1.5rem', fontWeight: 800, marginBottom: '0.25rem', color: 'var(--text-main)' }}>
             Welcome, {pendingUser?.displayName || pendingUser?.email || 'User'}!
           </h3>
           <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem' }}>
@@ -121,7 +123,7 @@ export const RoleSelectionModal = ({ isOpen, onClose, pendingUser, onConfirmRole
         </div>
 
         {/* Role Cards List */}
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem', marginBottom: '1.5rem' }}>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '0.85rem', marginBottom: '1.5rem' }}>
           {roleOptions.map((r) => {
             const RoleIcon = r.icon;
             const isSelected = selectedRole === r.id;
@@ -130,10 +132,11 @@ export const RoleSelectionModal = ({ isOpen, onClose, pendingUser, onConfirmRole
                 key={r.id}
                 onClick={() => setSelectedRole(r.id)}
                 style={{
-                  padding: '1rem 1.25rem',
+                  padding: '1.1rem 1.25rem',
                   borderRadius: 'var(--radius-md)',
-                  border: isSelected ? `2px solid ${r.color}` : '1px solid var(--border-color)',
-                  background: isSelected ? `${r.color}15` : 'var(--bg-primary)',
+                  boxShadow: isSelected ? 'var(--shadow-neu-inset)' : 'var(--shadow-neu-sm)',
+                  border: isSelected ? `2px solid ${r.color}` : '1px solid rgba(255, 255, 255, 0.8)',
+                  background: 'var(--bg-primary)',
                   cursor: 'pointer',
                   transition: 'all 0.2s ease',
                   display: 'flex',
@@ -146,7 +149,7 @@ export const RoleSelectionModal = ({ isOpen, onClose, pendingUser, onConfirmRole
                     width: '42px',
                     height: '42px',
                     borderRadius: '12px',
-                    background: `${r.color}25`,
+                    background: `${r.color}15`,
                     color: r.color,
                     display: 'flex',
                     alignItems: 'center',
@@ -179,7 +182,7 @@ export const RoleSelectionModal = ({ isOpen, onClose, pendingUser, onConfirmRole
         <button
           onClick={handleConfirm}
           className="btn btn-primary"
-          style={{ width: '100%', padding: '0.8rem', fontSize: '1rem', fontWeight: 700 }}
+          style={{ width: '100%', padding: '0.85rem', fontSize: '1rem', fontWeight: 700 }}
         >
           Confirm Role & Access Dashboard <ArrowRight size={18} />
         </button>

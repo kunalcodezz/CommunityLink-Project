@@ -73,26 +73,27 @@ export const NgoDashboard = () => {
       
       {/* NGO Header */}
       <div className="glass-card" style={{
-        background: 'linear-gradient(135deg, rgba(16, 185, 129, 0.15) 0%, rgba(15, 23, 42, 0.95) 100%)',
-        borderLeft: '4px solid var(--accent-emerald)',
+        background: 'var(--bg-primary)',
         display: 'flex',
         justifyContent: 'space-between',
         alignItems: 'center',
         flexWrap: 'wrap',
         gap: '1.5rem'
       }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '1.25rem' }}>
           <div style={{
-            background: 'var(--accent-emerald)',
-            color: '#fff',
+            background: 'var(--bg-primary)',
+            color: 'var(--accent-emerald)',
             padding: '1rem',
-            borderRadius: 'var(--radius-md)'
+            borderRadius: 'var(--radius-md)',
+            boxShadow: 'var(--shadow-neu-sm)',
+            border: '1px solid rgba(255, 255, 255, 0.8)'
           }}>
             <HeartHandshake size={32} />
           </div>
           <div>
             <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-              <h2 style={{ fontSize: '1.5rem', fontWeight: 800 }}>{ngoProfile.name}</h2>
+              <h2 style={{ fontSize: '1.5rem', fontWeight: 800, color: 'var(--text-main)' }}>{ngoProfile.name}</h2>
               <span className="badge badge-emerald">Verified NGO</span>
             </div>
             <p style={{ fontSize: '0.9rem', color: 'var(--text-muted)' }}>
@@ -128,7 +129,7 @@ export const NgoDashboard = () => {
                     <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>Submitted {new Date(proof.submittedAt).toLocaleDateString()}</span>
                   </div>
 
-                  <h4 style={{ fontSize: '1.05rem', fontWeight: 700, marginBottom: '0.2rem' }}>
+                  <h4 style={{ fontSize: '1.05rem', fontWeight: 700, marginBottom: '0.2rem', color: 'var(--text-main)' }}>
                     Student: {studentProfile.name} ({studentProfile.college})
                   </h4>
                   <p style={{ fontSize: '0.85rem', color: 'var(--primary)', fontWeight: 600, marginBottom: '0.85rem' }}>
@@ -139,10 +140,16 @@ export const NgoDashboard = () => {
                     <img
                       src={proof.proofImage}
                       alt="Proof"
-                      style={{ width: '90px', height: '90px', borderRadius: 'var(--radius-md)', objectFit: 'cover' }}
+                      style={{ 
+                        width: '90px', 
+                        height: '90px', 
+                        borderRadius: 'var(--radius-md)', 
+                        objectFit: 'cover',
+                        boxShadow: 'var(--shadow-neu-sm)' 
+                      }}
                     />
-                    <div style={{ flex: 1, fontSize: '0.82rem', color: 'var(--text-muted)', background: 'var(--bg-primary)', padding: '0.6rem', borderRadius: 'var(--radius-sm)' }}>
-                      <strong>Notes:</strong> {proof.notes}
+                    <div style={{ flex: 1, fontSize: '0.82rem', color: 'var(--text-muted)', background: 'var(--bg-primary)', padding: '0.75rem', borderRadius: 'var(--radius-sm)', boxShadow: 'var(--shadow-neu-inset)' }}>
+                      <strong style={{ color: 'var(--text-main)' }}>Notes:</strong> {proof.notes}
                     </div>
                   </div>
 
@@ -175,7 +182,7 @@ export const NgoDashboard = () => {
                 <span className="badge badge-blue">{m.category}</span>
                 <span className="badge badge-emerald">+{m.xpReward} XP</span>
               </div>
-              <h4 style={{ fontSize: '1.1rem', fontWeight: 700, marginBottom: '0.4rem' }}>{m.title}</h4>
+              <h4 style={{ fontSize: '1.1rem', fontWeight: 700, marginBottom: '0.4rem', color: 'var(--text-main)' }}>{m.title}</h4>
               <p style={{ fontSize: '0.85rem', color: 'var(--text-muted)', marginBottom: '0.85rem' }}>
                 📍 {m.location} • 📅 {m.date}
               </p>
@@ -191,7 +198,7 @@ export const NgoDashboard = () => {
       {showCreateModal && (
         <div className="modal-overlay">
           <div className="modal-content">
-            <h3 style={{ fontSize: '1.3rem', fontWeight: 800, marginBottom: '0.5rem' }}>Create New Social Impact Mission</h3>
+            <h3 style={{ fontSize: '1.3rem', fontWeight: 800, marginBottom: '0.5rem', color: 'var(--text-main)' }}>Create New Social Impact Mission</h3>
             <p style={{ fontSize: '0.85rem', color: 'var(--text-muted)', marginBottom: '1.25rem' }}>
               Publish a volunteering initiative for students in your region.
             </p>

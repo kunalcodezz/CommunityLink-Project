@@ -43,25 +43,26 @@ export const ResidentDashboard = () => {
       
       {/* Resident Banner */}
       <div className="glass-card" style={{
-        background: 'linear-gradient(135deg, rgba(245, 158, 11, 0.15) 0%, rgba(15, 23, 42, 0.95) 100%)',
-        borderLeft: '4px solid var(--accent-amber)',
+        background: 'var(--bg-primary)',
         display: 'flex',
         justifyContent: 'space-between',
         alignItems: 'center',
         flexWrap: 'wrap',
         gap: '1.5rem'
       }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '1.25rem' }}>
           <div style={{
-            background: 'var(--accent-amber)',
-            color: '#fff',
+            background: 'var(--bg-primary)',
+            color: 'var(--accent-amber)',
             padding: '1rem',
-            borderRadius: 'var(--radius-md)'
+            borderRadius: 'var(--radius-md)',
+            boxShadow: 'var(--shadow-neu-sm)',
+            border: '1px solid rgba(255, 255, 255, 0.8)'
           }}>
             <Users size={32} />
           </div>
           <div>
-            <h2 style={{ fontSize: '1.5rem', fontWeight: 800 }}>Resident Community Request Portal</h2>
+            <h2 style={{ fontSize: '1.5rem', fontWeight: 800, color: 'var(--text-main)' }}>Resident Community Request Portal</h2>
             <p style={{ fontSize: '0.9rem', color: 'var(--text-muted)' }}>
               Report local civic or community needs (cleanups, blood drives, food distribution, book donations) to connect with student volunteer groups and NGOs.
             </p>
@@ -90,7 +91,7 @@ export const ResidentDashboard = () => {
                   </span>
                 </div>
 
-                <h4 style={{ fontSize: '1.15rem', fontWeight: 700, marginBottom: '0.4rem' }}>{issue.title}</h4>
+                <h4 style={{ fontSize: '1.15rem', fontWeight: 700, marginBottom: '0.4rem', color: 'var(--text-main)' }}>{issue.title}</h4>
                 <p style={{ fontSize: '0.85rem', color: 'var(--text-muted)', marginBottom: '0.85rem' }}>
                   📍 {issue.location} • Submitted by {issue.residentName} on {issue.date}
                 </p>
@@ -99,7 +100,13 @@ export const ResidentDashboard = () => {
                   <img
                     src={issue.image}
                     alt={issue.title}
-                    style={{ width: '100px', height: '80px', borderRadius: 'var(--radius-md)', objectFit: 'cover' }}
+                    style={{ 
+                      width: '100px', 
+                      height: '80px', 
+                      borderRadius: 'var(--radius-md)', 
+                      objectFit: 'cover',
+                      boxShadow: 'var(--shadow-neu-sm)' 
+                    }}
                   />
                   <p style={{ fontSize: '0.85rem', color: 'var(--text-muted)', lineHeight: 1.5, flex: 1 }}>
                     {issue.description}
@@ -129,7 +136,7 @@ export const ResidentDashboard = () => {
       {showFormModal && (
         <div className="modal-overlay">
           <div className="modal-content">
-            <h3 style={{ fontSize: '1.3rem', fontWeight: 800, marginBottom: '0.5rem' }}>Report Local Community Need</h3>
+            <h3 style={{ fontSize: '1.3rem', fontWeight: 800, marginBottom: '0.5rem', color: 'var(--text-main)' }}>Report Local Community Need</h3>
             <p style={{ fontSize: '0.85rem', color: 'var(--text-muted)', marginBottom: '1.25rem' }}>
               Provide details so nearby student groups and NGOs can assist.
             </p>

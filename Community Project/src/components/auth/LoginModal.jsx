@@ -42,28 +42,28 @@ export const LoginModal = ({ isOpen, onClose, targetTab, setActiveTab }) => {
       id: 'student',
       title: 'Student Volunteer',
       icon: User,
-      color: '#3b82f6',
+      color: '#2563EB',
       description: 'Access student missions, log hours, track XP & earn verified certificates.'
     },
     {
       id: 'ngo',
       title: 'NGO Organization',
       icon: HeartHandshake,
-      color: '#10b981',
+      color: '#22C55E',
       description: 'Post drives, manage volunteer applications & issue official certificates.'
     },
     {
       id: 'resident',
       title: 'Local Resident',
       icon: Users,
-      color: '#f59e0b',
+      color: '#F59E0B',
       description: 'Report civic issues & connect with local student volunteer groups.'
     },
     {
       id: 'admin',
       title: 'Platform Admin',
       icon: ShieldAlert,
-      color: '#8b5cf6',
+      color: '#8B5CF6',
       description: 'Monitor platform governance, verify NGOs & audit safety compliance.'
     }
   ];
@@ -136,7 +136,7 @@ export const LoginModal = ({ isOpen, onClose, targetTab, setActiveTab }) => {
       <div 
         className="modal-content" 
         onClick={(e) => e.stopPropagation()}
-        style={{ maxWidth: '580px', padding: '2rem', position: 'relative' }}
+        style={{ maxWidth: '580px', padding: '2.25rem', position: 'relative' }}
       >
         {/* Close Button */}
         <button 
@@ -146,7 +146,7 @@ export const LoginModal = ({ isOpen, onClose, targetTab, setActiveTab }) => {
             top: '1.25rem',
             right: '1.25rem',
             background: 'var(--bg-primary)',
-            border: '1px solid var(--border-color)',
+            border: '1px solid rgba(255, 255, 255, 0.8)',
             color: 'var(--text-muted)',
             borderRadius: '50%',
             width: '36px',
@@ -155,6 +155,7 @@ export const LoginModal = ({ isOpen, onClose, targetTab, setActiveTab }) => {
             alignItems: 'center',
             justifyContent: 'center',
             cursor: 'pointer',
+            boxShadow: 'var(--shadow-neu-sm)',
             transition: 'all 0.2s'
           }}
         >
@@ -172,7 +173,7 @@ export const LoginModal = ({ isOpen, onClose, targetTab, setActiveTab }) => {
               borderRadius: 'var(--radius-md)',
               objectFit: 'contain',
               marginBottom: '0.75rem',
-              boxShadow: '0 6px 20px rgba(59, 130, 246, 0.4)'
+              boxShadow: 'var(--shadow-neu-sm)'
             }}
           />
           <div>
@@ -180,10 +181,11 @@ export const LoginModal = ({ isOpen, onClose, targetTab, setActiveTab }) => {
               display: 'inline-flex',
               alignItems: 'center',
               gap: '0.4rem',
-              padding: '0.3rem 0.75rem',
+              padding: '0.35rem 0.85rem',
               borderRadius: 'var(--radius-full)',
-              background: 'rgba(255, 107, 0, 0.12)',
-              border: '1px solid rgba(255, 107, 0, 0.3)',
+              background: 'var(--bg-primary)',
+              boxShadow: 'var(--shadow-neu-sm)',
+              border: '1px solid rgba(255, 255, 255, 0.8)',
               color: '#ff6b00',
               fontSize: '0.75rem',
               fontWeight: 800,
@@ -195,7 +197,7 @@ export const LoginModal = ({ isOpen, onClose, targetTab, setActiveTab }) => {
             </div>
           </div>
 
-          <h3 style={{ fontSize: '1.6rem', fontWeight: 800, marginBottom: '0.35rem' }}>
+          <h3 style={{ fontSize: '1.6rem', fontWeight: 800, marginBottom: '0.35rem', color: 'var(--text-main)' }}>
             {authMode === 'signin' ? 'Firebase Sign In' : 'Create Firebase Account'}
           </h3>
           <p style={{ color: 'var(--text-muted)', fontSize: '0.88rem' }}>
@@ -207,28 +209,30 @@ export const LoginModal = ({ isOpen, onClose, targetTab, setActiveTab }) => {
         <div style={{
           display: 'flex',
           background: 'var(--bg-primary)',
-          padding: '0.25rem',
+          padding: '0.35rem',
           borderRadius: 'var(--radius-md)',
           marginBottom: '1.25rem',
-          border: '1px solid var(--border-color)'
+          boxShadow: 'var(--shadow-neu-inset)'
         }}>
           <button
             type="button"
             onClick={() => { setAuthMode('signin'); setErrorMessage(''); }}
             style={{
               flex: 1,
-              padding: '0.5rem',
+              padding: '0.6rem',
               borderRadius: 'var(--radius-sm)',
               border: 'none',
               background: authMode === 'signin' ? 'var(--primary)' : 'transparent',
               color: authMode === 'signin' ? '#fff' : 'var(--text-muted)',
+              boxShadow: authMode === 'signin' ? '0 4px 10px rgba(37, 99, 235, 0.35)' : 'none',
               fontWeight: 700,
               fontSize: '0.88rem',
               cursor: 'pointer',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
-              gap: '0.4rem'
+              gap: '0.4rem',
+              transition: 'all 0.2s ease'
             }}
           >
             <LogIn size={15} /> Sign In
@@ -238,18 +242,20 @@ export const LoginModal = ({ isOpen, onClose, targetTab, setActiveTab }) => {
             onClick={() => { setAuthMode('signup'); setErrorMessage(''); }}
             style={{
               flex: 1,
-              padding: '0.5rem',
+              padding: '0.6rem',
               borderRadius: 'var(--radius-sm)',
               border: 'none',
               background: authMode === 'signup' ? 'var(--primary)' : 'transparent',
               color: authMode === 'signup' ? '#fff' : 'var(--text-muted)',
+              boxShadow: authMode === 'signup' ? '0 4px 10px rgba(37, 99, 235, 0.35)' : 'none',
               fontWeight: 700,
               fontSize: '0.88rem',
               cursor: 'pointer',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
-              gap: '0.4rem'
+              gap: '0.4rem',
+              transition: 'all 0.2s ease'
             }}
           >
             <UserPlus size={15} /> Create Account
@@ -261,16 +267,13 @@ export const LoginModal = ({ isOpen, onClose, targetTab, setActiveTab }) => {
           type="button"
           onClick={handleGoogleSignIn}
           disabled={isSubmitting}
+          className="btn btn-secondary"
           style={{
             width: '100%',
-            padding: '0.75rem',
+            padding: '0.8rem',
             borderRadius: 'var(--radius-md)',
-            border: '1px solid var(--border-color)',
-            background: 'var(--bg-primary)',
-            color: 'var(--text-main)',
             fontWeight: 700,
             fontSize: '0.92rem',
-            cursor: 'pointer',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
@@ -298,7 +301,7 @@ export const LoginModal = ({ isOpen, onClose, targetTab, setActiveTab }) => {
           <label style={{ fontSize: '0.8rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.05em', color: 'var(--text-muted)', display: 'block', marginBottom: '0.6rem' }}>
             Select Profile Role:
           </label>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '0.65rem' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '0.75rem' }}>
             {roleOptions.map((r) => {
               const RoleIcon = r.icon;
               const isSelected = selectedRole === r.id;
@@ -307,22 +310,24 @@ export const LoginModal = ({ isOpen, onClose, targetTab, setActiveTab }) => {
                   key={r.id}
                   onClick={() => setSelectedRole(r.id)}
                   style={{
-                    padding: '0.75rem 0.85rem',
+                    padding: '0.85rem 0.95rem',
                     borderRadius: 'var(--radius-md)',
-                    border: isSelected ? `2px solid ${r.color}` : '1px solid var(--border-color)',
-                    background: isSelected ? `${r.color}15` : 'var(--bg-primary)',
+                    border: isSelected ? `2px solid ${r.color}` : '1px solid rgba(255, 255, 255, 0.8)',
+                    boxShadow: isSelected ? 'var(--shadow-neu-inset)' : 'var(--shadow-neu-sm)',
+                    background: 'var(--bg-primary)',
                     cursor: 'pointer',
-                    transition: 'all 0.2s ease',
+                    transition: 'all 0.15s ease',
                     position: 'relative'
                   }}
                 >
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem' }}>
                     <div style={{
-                      width: '28px',
-                      height: '28px',
-                      borderRadius: '6px',
-                      background: `${r.color}25`,
-                      color: r.color,
+                      width: '32px',
+                      height: '32px',
+                      borderRadius: '8px',
+                      background: r.color,
+                      color: '#FFFFFF',
+                      boxShadow: '0 2px 6px rgba(0,0,0,0.15)',
                       display: 'flex',
                       alignItems: 'center',
                       justifyContent: 'center',
@@ -331,14 +336,14 @@ export const LoginModal = ({ isOpen, onClose, targetTab, setActiveTab }) => {
                       <RoleIcon size={16} />
                     </div>
                     <div style={{ overflow: 'hidden' }}>
-                      <div style={{ fontSize: '0.85rem', fontWeight: 700, color: isSelected ? r.color : 'var(--text-main)', whiteSpace: 'nowrap', textOverflow: 'ellipsis', overflow: 'hidden' }}>
+                      <div style={{ fontSize: '0.85rem', fontWeight: 800, color: 'var(--text-main)', whiteSpace: 'nowrap', textOverflow: 'ellipsis', overflow: 'hidden' }}>
                         {r.title}
                       </div>
                     </div>
                   </div>
                   {isSelected && (
-                    <div style={{ position: 'absolute', top: '6px', right: '6px', color: r.color }}>
-                      <CheckCircle2 size={14} />
+                    <div style={{ position: 'absolute', top: '8px', right: '8px', color: r.color }}>
+                      <CheckCircle2 size={16} />
                     </div>
                   )}
                 </div>
@@ -359,7 +364,7 @@ export const LoginModal = ({ isOpen, onClose, targetTab, setActiveTab }) => {
                 value={displayName}
                 onChange={(e) => setDisplayName(e.target.value)}
                 className="form-input"
-                style={{ padding: '0.65rem 0.85rem', fontSize: '0.88rem' }}
+                style={{ padding: '0.75rem 0.95rem', fontSize: '0.88rem' }}
               />
             </div>
           )}
@@ -374,7 +379,7 @@ export const LoginModal = ({ isOpen, onClose, targetTab, setActiveTab }) => {
                     value={dob}
                     onChange={(e) => setDob(e.target.value)}
                     className="form-input"
-                    style={{ padding: '0.65rem 0.85rem', fontSize: '0.88rem' }}
+                    style={{ padding: '0.75rem 0.95rem', fontSize: '0.88rem' }}
                   />
                 </div>
 
@@ -386,7 +391,7 @@ export const LoginModal = ({ isOpen, onClose, targetTab, setActiveTab }) => {
                     value={college}
                     onChange={(e) => setCollege(e.target.value)}
                     className="form-input"
-                    style={{ padding: '0.65rem 0.85rem', fontSize: '0.88rem' }}
+                    style={{ padding: '0.75rem 0.95rem', fontSize: '0.88rem' }}
                   />
                 </div>
               </div>
@@ -397,7 +402,7 @@ export const LoginModal = ({ isOpen, onClose, targetTab, setActiveTab }) => {
                   value={education}
                   onChange={(e) => setEducation(e.target.value)}
                   className="form-select"
-                  style={{ padding: '0.65rem 0.85rem', fontSize: '0.88rem' }}
+                  style={{ padding: '0.75rem 0.95rem', fontSize: '0.88rem' }}
                 >
                   <option value="B.Tech / B.E.">B.Tech / B.E. (Engineering)</option>
                   <option value="B.Sc / B.C.A.">B.Sc / B.C.A. (Science & IT)</option>
@@ -420,9 +425,9 @@ export const LoginModal = ({ isOpen, onClose, targetTab, setActiveTab }) => {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 className="form-input"
-                style={{ paddingLeft: '2.4rem', padding: '0.65rem 0.85rem 0.65rem 2.4rem', fontSize: '0.88rem' }}
+                style={{ paddingLeft: '2.5rem', fontSize: '0.88rem' }}
               />
-              <User size={15} style={{ position: 'absolute', left: '0.85rem', top: '50%', transform: 'translateY(-50%)', color: 'var(--text-dim)' }} />
+              <User size={15} style={{ position: 'absolute', left: '0.95rem', top: '50%', transform: 'translateY(-50%)', color: 'var(--text-muted)' }} />
             </div>
           </div>
 
@@ -436,18 +441,18 @@ export const LoginModal = ({ isOpen, onClose, targetTab, setActiveTab }) => {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 className="form-input"
-                style={{ paddingLeft: '2.4rem', padding: '0.65rem 0.85rem 0.65rem 2.4rem', fontSize: '0.88rem' }}
+                style={{ paddingLeft: '2.5rem', fontSize: '0.88rem' }}
               />
-              <Lock size={15} style={{ position: 'absolute', left: '0.85rem', top: '50%', transform: 'translateY(-50%)', color: 'var(--text-dim)' }} />
+              <Lock size={15} style={{ position: 'absolute', left: '0.95rem', top: '50%', transform: 'translateY(-50%)', color: 'var(--text-muted)' }} />
             </div>
           </div>
 
           {errorMessage && (
             <div style={{
               background: 'var(--accent-rose-light)',
-              color: '#f87171',
-              border: '1px solid rgba(248, 113, 113, 0.3)',
-              padding: '0.65rem 0.85rem',
+              color: 'var(--accent-rose)',
+              border: '1px solid var(--accent-rose)',
+              padding: '0.75rem 0.95rem',
               borderRadius: 'var(--radius-sm)',
               fontSize: '0.82rem',
               marginBottom: '1rem',
@@ -465,7 +470,7 @@ export const LoginModal = ({ isOpen, onClose, targetTab, setActiveTab }) => {
             type="submit" 
             disabled={isSubmitting}
             className="btn btn-primary" 
-            style={{ width: '100%', padding: '0.75rem', fontSize: '0.95rem', fontWeight: 700 }}
+            style={{ width: '100%', padding: '0.85rem', fontSize: '0.95rem', fontWeight: 700 }}
           >
             {isSubmitting ? (
               <span>Authenticating via Firebase Auth...</span>

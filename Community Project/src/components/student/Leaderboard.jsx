@@ -14,7 +14,7 @@ export const Leaderboard = () => {
         <span className="badge badge-amber" style={{ marginBottom: '0.75rem' }}>
           <Trophy size={14} /> Student Impact Rankings
         </span>
-        <h2 style={{ fontSize: '2.2rem', fontWeight: 800, marginBottom: '0.5rem' }}>
+        <h2 style={{ fontSize: '2.2rem', fontWeight: 800, marginBottom: '0.5rem', color: 'var(--text-main)' }}>
           Community Leaderboard
         </h2>
         <p style={{ color: 'var(--text-muted)' }}>
@@ -23,7 +23,7 @@ export const Leaderboard = () => {
       </div>
 
       {/* Filter Tabs */}
-      <div style={{ display: 'flex', justifyContent: 'center', gap: '0.5rem' }}>
+      <div style={{ display: 'flex', justifyContent: 'center', gap: '0.6rem' }}>
         {['weekly', 'monthly', 'college', 'city'].map(cat => (
           <button
             key={cat}
@@ -42,24 +42,24 @@ export const Leaderboard = () => {
         {/* #2 Rank (Silver) */}
         <div className="glass-card" style={{ textAlign: 'center', padding: '1.75rem 1rem', borderTop: '4px solid #94a3b8' }}>
           <div style={{ position: 'relative', width: '70px', height: '70px', margin: '0 auto 0.75rem auto' }}>
-            <img src={leaderboard[1].avatar} alt={leaderboard[1].name} style={{ width: '100%', height: '100%', borderRadius: '50%', objectFit: 'cover' }} />
-            <span style={{ position: 'absolute', bottom: '-8px', right: '-4px', background: '#94a3b8', color: '#0f172a', fontWeight: 800, width: '24px', height: '24px', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '0.8rem' }}>2</span>
+            <img src={leaderboard[1].avatar} alt={leaderboard[1].name} style={{ width: '100%', height: '100%', borderRadius: '50%', objectFit: 'cover', boxShadow: 'var(--shadow-neu-sm)' }} />
+            <span style={{ position: 'absolute', bottom: '-8px', right: '-4px', background: '#94a3b8', color: '#0f172a', fontWeight: 800, width: '24px', height: '24px', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '0.8rem', boxShadow: '0 2px 5px rgba(0,0,0,0.2)' }}>2</span>
           </div>
-          <h4 style={{ fontSize: '1.05rem', fontWeight: 800 }}>{leaderboard[1].name}</h4>
+          <h4 style={{ fontSize: '1.05rem', fontWeight: 800, color: 'var(--text-main)' }}>{leaderboard[1].name}</h4>
           <p style={{ fontSize: '0.8rem', color: 'var(--text-muted)', marginBottom: '0.75rem' }}>{leaderboard[1].college}</p>
           <span className="badge badge-blue">{leaderboard[1].xp} XP</span>
         </div>
 
         {/* #1 Rank (Gold - Crowned) */}
-        <div className="glass-card pulse-glow" style={{ textAlign: 'center', padding: '2.25rem 1rem', borderTop: '4px solid #f59e0b', background: 'linear-gradient(135deg, rgba(30,41,59,0.95), rgba(245,158,11,0.1))' }}>
+        <div className="glass-card pulse-glow" style={{ textAlign: 'center', padding: '2.25rem 1rem', border: '1px solid rgba(255, 255, 255, 0.9)', background: 'var(--bg-primary)', boxShadow: 'var(--shadow-neu-lg)' }}>
           <div style={{ color: '#f59e0b', marginBottom: '0.2rem' }}>
             <Crown size={28} />
           </div>
           <div style={{ position: 'relative', width: '85px', height: '85px', margin: '0 auto 0.75rem auto' }}>
-            <img src={leaderboard[0].avatar} alt={leaderboard[0].name} style={{ width: '100%', height: '100%', borderRadius: '50%', objectFit: 'cover', border: '3px solid #f59e0b' }} />
-            <span style={{ position: 'absolute', bottom: '-8px', right: '-4px', background: '#f59e0b', color: '#ffffff', fontWeight: 800, width: '28px', height: '28px', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '0.9rem' }}>1</span>
+            <img src={leaderboard[0].avatar} alt={leaderboard[0].name} style={{ width: '100%', height: '100%', borderRadius: '50%', objectFit: 'cover', boxShadow: '-4px -4px 10px #FFFFFF, 6px 6px 14px rgba(245, 158, 11, 0.45)' }} />
+            <span style={{ position: 'absolute', bottom: '-8px', right: '-4px', background: '#f59e0b', color: '#ffffff', fontWeight: 800, width: '28px', height: '28px', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '0.9rem', boxShadow: '0 2px 6px rgba(245, 158, 11, 0.5)' }}>1</span>
           </div>
-          <h4 style={{ fontSize: '1.2rem', fontWeight: 800 }}>{leaderboard[0].name}</h4>
+          <h4 style={{ fontSize: '1.2rem', fontWeight: 800, color: 'var(--text-main)' }}>{leaderboard[0].name}</h4>
           <p style={{ fontSize: '0.85rem', color: 'var(--text-muted)', marginBottom: '0.75rem' }}>{leaderboard[0].college}</p>
           <span className="badge badge-amber" style={{ fontSize: '0.9rem', padding: '0.4rem 1rem' }}>{leaderboard[0].xp} XP</span>
         </div>
@@ -67,10 +67,10 @@ export const Leaderboard = () => {
         {/* #3 Rank (Bronze) */}
         <div className="glass-card" style={{ textAlign: 'center', padding: '1.5rem 1rem', borderTop: '4px solid #b45309' }}>
           <div style={{ position: 'relative', width: '65px', height: '65px', margin: '0 auto 0.75rem auto' }}>
-            <img src={leaderboard[2].avatar} alt={leaderboard[2].name} style={{ width: '100%', height: '100%', borderRadius: '50%', objectFit: 'cover' }} />
-            <span style={{ position: 'absolute', bottom: '-8px', right: '-4px', background: '#b45309', color: '#ffffff', fontWeight: 800, width: '24px', height: '24px', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '0.8rem' }}>3</span>
+            <img src={leaderboard[2].avatar} alt={leaderboard[2].name} style={{ width: '100%', height: '100%', borderRadius: '50%', objectFit: 'cover', boxShadow: 'var(--shadow-neu-sm)' }} />
+            <span style={{ position: 'absolute', bottom: '-8px', right: '-4px', background: '#b45309', color: '#ffffff', fontWeight: 800, width: '24px', height: '24px', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '0.8rem', boxShadow: '0 2px 5px rgba(0,0,0,0.2)' }}>3</span>
           </div>
-          <h4 style={{ fontSize: '1rem', fontWeight: 800 }}>{leaderboard[2].name}</h4>
+          <h4 style={{ fontSize: '1rem', fontWeight: 800, color: 'var(--text-main)' }}>{leaderboard[2].name}</h4>
           <p style={{ fontSize: '0.8rem', color: 'var(--text-muted)', marginBottom: '0.75rem' }}>{leaderboard[2].college}</p>
           <span className="badge badge-blue">{leaderboard[2].xp} XP</span>
         </div>
@@ -78,7 +78,7 @@ export const Leaderboard = () => {
       </div>
 
       {/* Full Leaderboard Table */}
-      <div className="glass-card" style={{ padding: '1rem' }}>
+      <div className="glass-card" style={{ padding: '1.25rem' }}>
         <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left', fontSize: '0.9rem' }}>
           <thead>
             <tr style={{ borderBottom: '1px solid var(--border-color)', color: 'var(--text-muted)', fontSize: '0.8rem', textTransform: 'uppercase' }}>
@@ -94,19 +94,19 @@ export const Leaderboard = () => {
               <tr 
                 key={item.rank}
                 style={{
-                  borderBottom: '1px solid rgba(255,255,255,0.05)',
+                  borderBottom: '1px solid var(--border-color)',
                   background: item.name === studentProfile.name ? 'var(--primary-light)' : 'transparent'
                 }}
               >
-                <td style={{ padding: '0.85rem 1rem', fontWeight: 800 }}>#{item.rank}</td>
+                <td style={{ padding: '0.85rem 1rem', fontWeight: 800, color: 'var(--text-main)' }}>#{item.rank}</td>
                 <td style={{ padding: '0.85rem 1rem' }}>
                   <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
-                    <img src={item.avatar} alt={item.name} style={{ width: '36px', height: '36px', borderRadius: '50%', objectFit: 'cover' }} />
-                    <span style={{ fontWeight: 700 }}>{item.name}</span>
+                    <img src={item.avatar} alt={item.name} style={{ width: '36px', height: '36px', borderRadius: '50%', objectFit: 'cover', boxShadow: 'var(--shadow-neu-sm)' }} />
+                    <span style={{ fontWeight: 700, color: 'var(--text-main)' }}>{item.name}</span>
                   </div>
                 </td>
                 <td style={{ padding: '0.85rem 1rem', color: 'var(--text-muted)' }}>{item.college}</td>
-                <td style={{ padding: '0.85rem 1rem', fontWeight: 600 }}>{item.hours} hrs</td>
+                <td style={{ padding: '0.85rem 1rem', fontWeight: 600, color: 'var(--text-main)' }}>{item.hours} hrs</td>
                 <td style={{ padding: '0.85rem 1rem' }}>
                   <span className="badge badge-emerald">+{item.xp} XP</span>
                 </td>

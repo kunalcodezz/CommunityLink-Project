@@ -16,7 +16,8 @@ import {
   Globe,
   LogIn,
   LogOut,
-  Lock
+  Lock,
+  TreePine
 } from 'lucide-react';
 
 export const Navbar = ({ activeTab, setActiveTab }) => {
@@ -67,9 +68,9 @@ export const Navbar = ({ activeTab, setActiveTab }) => {
       position: 'sticky',
       top: 0,
       zIndex: 100,
-      background: 'var(--bg-glass)',
-      backdropFilter: 'blur(16px)',
-      borderBottom: '1px solid var(--border-color)',
+      background: 'var(--bg-primary)',
+      borderBottom: '1px solid rgba(255, 255, 255, 0.8)',
+      boxShadow: 'var(--shadow-neu-md)',
       padding: '0.75rem 1.5rem'
     }}>
       <div style={{
@@ -84,7 +85,7 @@ export const Navbar = ({ activeTab, setActiveTab }) => {
         
         {/* Brand Logo */}
         <div 
-          onClick={() => setActiveTab('feed')}
+          onClick={() => setActiveTab('landing')}
           style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', cursor: 'pointer' }}
         >
           <img 
@@ -95,14 +96,15 @@ export const Navbar = ({ activeTab, setActiveTab }) => {
               width: 'auto', 
               borderRadius: 'var(--radius-md)', 
               objectFit: 'contain',
-              boxShadow: '0 4px 14px rgba(59, 130, 246, 0.35)'
+              boxShadow: 'var(--shadow-neu-sm)',
+              border: '1px solid rgba(255, 255, 255, 0.8)'
             }} 
           />
           <div>
-            <h1 style={{ fontSize: '1.35rem', fontWeight: 800, background: 'linear-gradient(135deg, #60a5fa 0%, #3b82f6 100%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>
+            <h1 style={{ fontSize: '1.4rem', fontWeight: 900, color: 'var(--text-main)', letterSpacing: '-0.02em' }}>
               CommunityLink
             </h1>
-            <p style={{ fontSize: '0.72rem', color: 'var(--text-muted)', fontWeight: 600 }}>
+            <p style={{ fontSize: '0.72rem', color: 'var(--text-muted)', fontWeight: 700 }}>
               Smart Student Social Impact Platform
             </p>
           </div>
@@ -110,6 +112,13 @@ export const Navbar = ({ activeTab, setActiveTab }) => {
 
         {/* Navigation Tabs */}
         <nav style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', flexWrap: 'wrap' }}>
+          <button 
+            className={`btn btn-sm ${activeTab === 'landing' ? 'btn-emerald' : 'btn-secondary'}`}
+            onClick={() => setActiveTab('landing')}
+          >
+            <TreePine size={16} /> Eco Landing
+          </button>
+
           <button 
             className={`btn btn-sm ${activeTab === 'feed' ? 'btn-primary' : 'btn-secondary'}`}
             onClick={() => setActiveTab('feed')}
@@ -169,8 +178,16 @@ export const Navbar = ({ activeTab, setActiveTab }) => {
           
           {/* Quick Role Switcher (If logged in) */}
           {isLoggedIn && (
-            <div style={{ display: 'flex', alignItems: 'center', background: 'var(--bg-secondary)', padding: '0.25rem 0.5rem', borderRadius: 'var(--radius-md)', border: '1px solid var(--border-color)' }}>
-              <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)', marginRight: '0.4rem', fontWeight: 600 }}>Role:</span>
+            <div style={{ 
+              display: 'flex', 
+              alignItems: 'center', 
+              background: 'var(--bg-primary)', 
+              padding: '0.4rem 0.75rem', 
+              borderRadius: 'var(--radius-md)', 
+              boxShadow: 'var(--shadow-neu-inset)',
+              border: '1px solid rgba(203, 213, 225, 0.4)'
+            }}>
+              <span style={{ fontSize: '0.75rem', color: 'var(--text-main)', marginRight: '0.4rem', fontWeight: 800 }}>ROLE:</span>
               <select
                 value={currentUserRole}
                 onChange={(e) => {
@@ -181,7 +198,7 @@ export const Navbar = ({ activeTab, setActiveTab }) => {
                   background: 'transparent',
                   border: 'none',
                   color: roleLabels[currentUserRole].color,
-                  fontWeight: 700,
+                  fontWeight: 800,
                   fontSize: '0.85rem',
                   cursor: 'pointer',
                   outline: 'none'
@@ -214,7 +231,7 @@ export const Navbar = ({ activeTab, setActiveTab }) => {
             className="btn btn-secondary btn-sm"
             onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
           >
-            {theme === 'dark' ? <Sun size={16} color="#fbbf24" /> : <Moon size={16} color="#3b82f6" />}
+            {theme === 'dark' ? <Sun size={16} color="#F59E0B" /> : <Moon size={16} color="#2563EB" />}
           </button>
 
           {/* Notifications Drawer Toggle */}
@@ -239,7 +256,8 @@ export const Navbar = ({ activeTab, setActiveTab }) => {
                   borderRadius: '50%',
                   display: 'flex',
                   alignItems: 'center',
-                  justifyContent: 'center'
+                  justifyContent: 'center',
+                  boxShadow: '0 2px 4px rgba(239, 68, 68, 0.4)'
                 }}>
                   {unreadCount}
                 </span>
@@ -251,35 +269,36 @@ export const Navbar = ({ activeTab, setActiveTab }) => {
               <div style={{
                 position: 'absolute',
                 right: 0,
-                top: '120%',
+                top: '125%',
                 width: '320px',
-                background: 'var(--bg-secondary)',
-                border: '1px solid var(--border-color)',
+                background: 'var(--bg-primary)',
+                border: '1px solid rgba(255, 255, 255, 0.9)',
                 borderRadius: 'var(--radius-md)',
-                boxShadow: 'var(--shadow-card)',
-                padding: '1rem',
+                boxShadow: 'var(--shadow-neu-lg)',
+                padding: '1.25rem',
                 zIndex: 200
               }}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.75rem' }}>
-                  <h4 style={{ fontSize: '0.95rem', fontWeight: 700 }}>Notifications</h4>
-                  <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>{unreadCount} unread</span>
+                  <h4 style={{ fontSize: '0.95rem', fontWeight: 800, color: 'var(--text-main)' }}>Notifications</h4>
+                  <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)', fontWeight: 700 }}>{unreadCount} unread</span>
                 </div>
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', maxHeight: '250px', overflowY: 'auto' }}>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '0.6rem', maxHeight: '250px', overflowY: 'auto' }}>
                   {notifications.map(n => (
                     <div 
                       key={n.id}
                       onClick={() => markNotificationAsRead(n.id)}
                       style={{
-                        padding: '0.6rem',
+                        padding: '0.75rem',
                         borderRadius: 'var(--radius-sm)',
-                        background: n.read ? 'transparent' : 'var(--primary-light)',
-                        borderLeft: n.read ? '3px solid transparent' : '3px solid var(--primary)',
+                        background: 'var(--bg-primary)',
+                        boxShadow: n.read ? 'var(--shadow-neu-inset)' : 'var(--shadow-neu-sm)',
+                        border: '1px solid rgba(255, 255, 255, 0.7)',
                         cursor: 'pointer'
                       }}
                     >
-                      <div style={{ fontSize: '0.85rem', fontWeight: 700 }}>{n.title}</div>
-                      <div style={{ fontSize: '0.78rem', color: 'var(--text-muted)' }}>{n.message}</div>
-                      <div style={{ fontSize: '0.68rem', color: 'var(--text-dim)', marginTop: '0.2rem' }}>{n.time}</div>
+                      <div style={{ fontSize: '0.85rem', fontWeight: 800, color: n.read ? 'var(--text-muted)' : 'var(--primary)' }}>{n.title}</div>
+                      <div style={{ fontSize: '0.78rem', color: 'var(--text-main)' }}>{n.message}</div>
+                      <div style={{ fontSize: '0.68rem', color: 'var(--text-muted)', marginTop: '0.2rem', fontWeight: 700 }}>{n.time}</div>
                     </div>
                   ))}
                 </div>
@@ -287,7 +306,7 @@ export const Navbar = ({ activeTab, setActiveTab }) => {
             )}
           </div>
 
-          {/* Right Side Auth Control (Login vs User Profile / Logout) */}
+          {/* Right Side Auth Control */}
           {isLoggedIn ? (
             <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
               <div 
@@ -295,12 +314,13 @@ export const Navbar = ({ activeTab, setActiveTab }) => {
                   display: 'flex',
                   alignItems: 'center',
                   gap: '0.4rem',
-                  background: 'var(--primary-light)',
-                  padding: '0.35rem 0.75rem',
+                  background: 'var(--bg-primary)',
+                  padding: '0.45rem 0.85rem',
                   borderRadius: 'var(--radius-md)',
-                  border: '1px solid rgba(59, 130, 246, 0.3)',
+                  boxShadow: 'var(--shadow-neu-sm)',
+                  border: '1px solid rgba(255, 255, 255, 0.8)',
                   fontSize: '0.82rem',
-                  fontWeight: 700,
+                  fontWeight: 800,
                   color: 'var(--primary)'
                 }}
               >
@@ -320,7 +340,7 @@ export const Navbar = ({ activeTab, setActiveTab }) => {
             <button 
               onClick={() => openAuthModal()}
               className="btn btn-primary btn-sm pulse-glow"
-              style={{ fontWeight: 700, padding: '0.45rem 1rem' }}
+              style={{ fontWeight: 700, padding: '0.5rem 1.1rem' }}
             >
               <LogIn size={16} /> Log In
             </button>
@@ -331,4 +351,3 @@ export const Navbar = ({ activeTab, setActiveTab }) => {
     </header>
   );
 };
-

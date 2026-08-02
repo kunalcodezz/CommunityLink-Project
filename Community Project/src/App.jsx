@@ -6,6 +6,7 @@ import { AiAssistant } from './components/AiAssistant';
 import { LoginModal } from './components/auth/LoginModal';
 import { StudentProfileSetupModal } from './components/student/StudentProfileSetupModal';
 import { RoleSelectionModal } from './components/auth/RoleSelectionModal';
+import { PremiumLandingPage } from './components/landing/PremiumLandingPage';
 import { Lock, LogIn, Sparkles, ShieldCheck } from 'lucide-react';
 
 // Tab Screens
@@ -19,8 +20,8 @@ import { InteractiveMap } from './components/map/InteractiveMap';
 import { CommunityFeed } from './components/community/CommunityFeed';
 
 const MainLayout = () => {
-  // Upon project opening, display the Community Feed
-  const [activeTab, setActiveTab] = useState('feed'); // 'feed' | 'explore' | 'map' | 'leaderboard' | 'dashboard'
+  // Premium Landing initial tab screen
+  const [activeTab, setActiveTab] = useState('landing'); // 'landing' | 'feed' | 'explore' | 'map' | 'leaderboard' | 'dashboard'
   const { 
     currentUserRole, 
     isLoggedIn, 
@@ -45,13 +46,13 @@ const MainLayout = () => {
               width: '64px',
               height: '64px',
               borderRadius: '20px',
-              background: 'linear-gradient(135deg, rgba(59, 130, 246, 0.2) 0%, rgba(16, 185, 129, 0.2) 100%)',
+              background: 'var(--bg-primary)',
+              boxShadow: 'var(--shadow-neu-sm)',
               color: 'var(--primary)',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
-              margin: '0 auto 1.5rem auto',
-              boxShadow: '0 8px 25px rgba(59, 130, 246, 0.3)'
+              margin: '0 auto 1.5rem auto'
             }}>
               <Lock size={32} />
             </div>
@@ -60,7 +61,7 @@ const MainLayout = () => {
               <ShieldCheck size={14} /> Authentication Required
             </span>
 
-            <h2 style={{ fontSize: '2rem', fontWeight: 800, marginBottom: '0.75rem' }}>
+            <h2 style={{ fontSize: '2rem', fontWeight: 800, marginBottom: '0.75rem', color: 'var(--text-main)' }}>
               Access Your Personal Dashboard
             </h2>
 
@@ -100,9 +101,17 @@ const MainLayout = () => {
 
   return (
     <div className="app-container">
-      <Navbar activeTab={activeTab} setActiveTab={setActiveTab} />
+      {/* Render Navbar on tab screens other than landing */}
+      {activeTab !== 'landing' && <Navbar activeTab={activeTab} setActiveTab={setActiveTab} />}
 
-      <main className="main-content">
+      <main className={activeTab === 'landing' ? '' : 'main-content'}>
+        {activeTab === 'landing' && (
+          <PremiumLandingPage 
+            onGetStarted={() => openAuthModal('dashboard')}
+            onExploreMissions={() => setActiveTab('explore')}
+            onSelectTab={(tab) => setActiveTab(tab)}
+          />
+        )}
         {activeTab === 'explore' && <MissionExplorer />}
         {activeTab === 'map' && <InteractiveMap />}
         {activeTab === 'leaderboard' && <Leaderboard />}
@@ -111,7 +120,7 @@ const MainLayout = () => {
       </main>
 
       <AiAssistant />
-      <Footer />
+      {activeTab !== 'landing' && <Footer />}
 
       <LoginModal 
         isOpen={isAuthModalOpen} 
@@ -144,4 +153,3 @@ export function App() {
 }
 
 export default App;
-

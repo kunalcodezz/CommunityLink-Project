@@ -54,26 +54,27 @@ export const AdminDashboard = () => {
       
       {/* Admin Header */}
       <div className="glass-card" style={{
-        background: 'linear-gradient(135deg, rgba(139, 92, 246, 0.15) 0%, rgba(15, 23, 42, 0.95) 100%)',
-        borderLeft: '4px solid var(--accent-purple)',
+        background: 'var(--bg-primary)',
         display: 'flex',
         justifyContent: 'space-between',
         alignItems: 'center',
         flexWrap: 'wrap',
         gap: '1.5rem'
       }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '1.25rem' }}>
           <div style={{
-            background: 'var(--accent-purple)',
-            color: '#fff',
+            background: 'var(--bg-primary)',
+            color: 'var(--accent-purple)',
             padding: '1rem',
-            borderRadius: 'var(--radius-md)'
+            borderRadius: 'var(--radius-md)',
+            boxShadow: 'var(--shadow-neu-sm)',
+            border: '1px solid rgba(255, 255, 255, 0.8)'
           }}>
             <ShieldAlert size={32} />
           </div>
           <div>
             <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-              <h2 style={{ fontSize: '1.5rem', fontWeight: 800 }}>Platform Administrator Portal</h2>
+              <h2 style={{ fontSize: '1.5rem', fontWeight: 800, color: 'var(--text-main)' }}>Platform Administrator Portal</h2>
               <span className="badge badge-purple">System Superuser</span>
             </div>
             <p style={{ fontSize: '0.9rem', color: 'var(--text-muted)' }}>
@@ -115,7 +116,7 @@ export const AdminDashboard = () => {
         
         {/* Volunteer Service Hours Growth */}
         <div className="glass-card">
-          <h4 style={{ fontSize: '1.1rem', fontWeight: 800, marginBottom: '1rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+          <h4 style={{ fontSize: '1.1rem', fontWeight: 800, marginBottom: '1rem', display: 'flex', alignItems: 'center', gap: '0.5rem', color: 'var(--text-main)' }}>
             <TrendingUp size={18} color="var(--primary)" /> Monthly Volunteer Hours Growth
           </h4>
           <div style={{ width: '100%', height: '240px' }}>
@@ -123,7 +124,7 @@ export const AdminDashboard = () => {
               <BarChart data={monthlyEngagementData}>
                 <XAxis dataKey="month" stroke="var(--text-muted)" fontSize={12} />
                 <YAxis stroke="var(--text-muted)" fontSize={12} />
-                <Tooltip contentStyle={{ background: 'var(--bg-secondary)', border: '1px solid var(--border-color)', borderRadius: '8px' }} />
+                <Tooltip contentStyle={{ background: 'var(--bg-primary)', border: '1px solid rgba(255, 255, 255, 0.8)', borderRadius: '12px', boxShadow: 'var(--shadow-neu-md)' }} />
                 <Bar dataKey="hours" fill="#3b82f6" radius={[6, 6, 0, 0]} />
               </BarChart>
             </ResponsiveContainer>
@@ -132,7 +133,7 @@ export const AdminDashboard = () => {
 
         {/* Category Breakdown */}
         <div className="glass-card">
-          <h4 style={{ fontSize: '1.1rem', fontWeight: 800, marginBottom: '1rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+          <h4 style={{ fontSize: '1.1rem', fontWeight: 800, marginBottom: '1rem', display: 'flex', alignItems: 'center', gap: '0.5rem', color: 'var(--text-main)' }}>
             <BarChart3 size={18} color="var(--accent-emerald)" /> Missions by Category Breakdown
           </h4>
           <div style={{ width: '100%', height: '240px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
@@ -151,7 +152,7 @@ export const AdminDashboard = () => {
                     <Cell key={`cell-${index}`} fill={entry.color} />
                   ))}
                 </Pie>
-                <Tooltip contentStyle={{ background: 'var(--bg-secondary)', border: '1px solid var(--border-color)', borderRadius: '8px' }} />
+                <Tooltip contentStyle={{ background: 'var(--bg-primary)', border: '1px solid rgba(255, 255, 255, 0.8)', borderRadius: '12px', boxShadow: 'var(--shadow-neu-md)' }} />
               </PieChart>
             </ResponsiveContainer>
           </div>
@@ -161,7 +162,7 @@ export const AdminDashboard = () => {
 
       {/* NGO Verification Management */}
       <div className="glass-card">
-        <h4 style={{ fontSize: '1.15rem', fontWeight: 800, marginBottom: '1rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+        <h4 style={{ fontSize: '1.15rem', fontWeight: 800, marginBottom: '1rem', display: 'flex', alignItems: 'center', gap: '0.5rem', color: 'var(--text-main)' }}>
           <FileCheck size={20} color="var(--accent-purple)" /> Pending NGO Verification Approvals
         </h4>
 
@@ -177,8 +178,8 @@ export const AdminDashboard = () => {
           </thead>
           <tbody>
             {sampleNgoRequests.map(ngo => (
-              <tr key={ngo.id} style={{ borderBottom: '1px solid rgba(255,255,255,0.05)' }}>
-                <td style={{ padding: '0.85rem', fontWeight: 700 }}>{ngo.name}</td>
+              <tr key={ngo.id} style={{ borderBottom: '1px solid var(--border-color)' }}>
+                <td style={{ padding: '0.85rem', fontWeight: 700, color: 'var(--text-main)' }}>{ngo.name}</td>
                 <td style={{ padding: '0.85rem', color: 'var(--text-muted)' }}>{ngo.regNo}</td>
                 <td style={{ padding: '0.85rem', color: 'var(--text-muted)' }}>{ngo.email}</td>
                 <td style={{ padding: '0.85rem' }}>

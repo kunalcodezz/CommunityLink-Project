@@ -77,11 +77,12 @@ export const InteractiveMap = () => {
                   pointerEvents: 'auto',
                   cursor: 'pointer',
                   transform: 'translate(-50%, -50%)',
-                  background: 'linear-gradient(135deg, #10b981 0%, #047857 100%)',
-                  color: '#ffffff',
+                  background: 'var(--secondary)',
+                  color: '#0F172A',
                   padding: '0.5rem 0.85rem',
-                  borderRadius: 'var(--radius-full)',
-                  boxShadow: '0 6px 18px rgba(16, 185, 129, 0.5)',
+                  borderRadius: 'var(--radius-md)',
+                  border: '2.5px solid #0F172A',
+                  boxShadow: '3px 3px 0px #0F172A',
                   fontSize: '0.8rem',
                   fontWeight: 800,
                   display: 'flex',
@@ -105,11 +106,12 @@ export const InteractiveMap = () => {
                   pointerEvents: 'auto',
                   cursor: 'pointer',
                   transform: 'translate(-50%, -50%)',
-                  background: 'linear-gradient(135deg, #f43f5e 0%, #be123c 100%)',
+                  background: 'var(--accent-rose)',
                   color: '#ffffff',
                   padding: '0.5rem 0.85rem',
-                  borderRadius: 'var(--radius-full)',
-                  boxShadow: '0 6px 18px rgba(244, 63, 94, 0.5)',
+                  borderRadius: 'var(--radius-md)',
+                  border: '2.5px solid #0F172A',
+                  boxShadow: '3px 3px 0px #0F172A',
                   fontSize: '0.8rem',
                   fontWeight: 800,
                   display: 'flex',
@@ -132,11 +134,12 @@ export const InteractiveMap = () => {
                   pointerEvents: 'auto',
                   cursor: 'pointer',
                   transform: 'translate(-50%, -50%)',
-                  background: 'linear-gradient(135deg, #f59e0b 0%, #b45309 100%)',
-                  color: '#ffffff',
+                  background: 'var(--accent)',
+                  color: '#0F172A',
                   padding: '0.5rem 0.85rem',
-                  borderRadius: 'var(--radius-full)',
-                  boxShadow: '0 6px 18px rgba(245, 158, 11, 0.5)',
+                  borderRadius: 'var(--radius-md)',
+                  border: '2.5px solid #0F172A',
+                  boxShadow: '3px 3px 0px #0F172A',
                   fontSize: '0.8rem',
                   fontWeight: 800,
                   display: 'flex',
@@ -151,7 +154,7 @@ export const InteractiveMap = () => {
           </div>
 
           {/* Map Overlay Badge Info */}
-          <div style={{ position: 'absolute', bottom: '1rem', left: '1rem', background: 'rgba(15,23,42,0.9)', padding: '0.5rem 1rem', borderRadius: 'var(--radius-md)', fontSize: '0.8rem', color: '#fff', border: '1px solid var(--border-color)' }}>
+          <div style={{ position: 'absolute', bottom: '1rem', left: '1rem', background: '#FFFFFF', padding: '0.5rem 1rem', borderRadius: 'var(--radius-md)', fontSize: '0.8rem', color: '#0F172A', fontWeight: 800, border: '2.5px solid #0F172A', boxShadow: '3px 3px 0px #0F172A' }}>
             Showing pins across Greater Mumbai & Navi Mumbai
           </div>
 

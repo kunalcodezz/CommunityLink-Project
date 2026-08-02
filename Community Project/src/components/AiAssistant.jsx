@@ -63,19 +63,19 @@ export const AiAssistant = () => {
             bottom: '24px',
             right: '24px',
             zIndex: 999,
-            background: 'linear-gradient(135deg, #8b5cf6 0%, #6d28d9 100%)',
+            background: 'var(--accent-purple)',
             color: '#ffffff',
-            border: 'none',
-            borderRadius: '50px',
+            border: '1px solid rgba(255, 255, 255, 0.4)',
+            borderRadius: 'var(--radius-full)',
             padding: '0.85rem 1.4rem',
-            boxShadow: '0 8px 25px rgba(139, 92, 246, 0.45)',
+            boxShadow: '-4px -4px 10px #FFFFFF, 6px 6px 16px rgba(139, 92, 246, 0.45)',
             cursor: 'pointer',
             display: 'flex',
             alignItems: 'center',
             gap: '0.6rem',
-            fontWeight: 700,
+            fontWeight: 800,
             fontSize: '0.95rem',
-            transition: 'transform 0.2s ease'
+            transition: 'all 0.2s ease'
           }}
           className="pulse-glow"
         >
@@ -92,25 +92,26 @@ export const AiAssistant = () => {
           right: '24px',
           zIndex: 1000,
           width: '380px',
-          height: '520px',
-          background: 'var(--bg-secondary)',
-          border: '1px solid var(--border-color)',
+          height: '530px',
+          background: 'var(--bg-primary)',
+          border: '1.5px solid rgba(255, 255, 255, 0.9)',
           borderRadius: 'var(--radius-lg)',
-          boxShadow: '0 20px 40px rgba(0, 0, 0, 0.6)',
+          boxShadow: 'var(--shadow-neu-xl)',
           display: 'flex',
           flexDirection: 'column',
           overflow: 'hidden',
-          animation: 'slideUp 0.3s cubic-bezier(0.16, 1, 0.3, 1)'
+          animation: 'slideUp 0.25s ease-out'
         }}>
           
           {/* Header */}
           <div style={{
-            background: 'linear-gradient(135deg, #8b5cf6 0%, #6d28d9 100%)',
-            padding: '1rem',
+            background: 'var(--primary)',
+            padding: '1.1rem',
             color: '#fff',
             display: 'flex',
             alignItems: 'center',
-            justifyContent: 'space-between'
+            justifyContent: 'space-between',
+            boxShadow: '0 4px 10px rgba(37, 99, 235, 0.3)'
           }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem' }}>
               <Bot size={22} />
@@ -142,12 +143,14 @@ export const AiAssistant = () => {
                 style={{
                   alignSelf: m.sender === 'user' ? 'flex-end' : 'flex-start',
                   maxWidth: '85%',
-                  background: m.sender === 'user' ? 'var(--primary)' : 'var(--bg-card)',
+                  background: m.sender === 'user' ? 'var(--primary)' : 'var(--bg-primary)',
                   color: m.sender === 'user' ? '#ffffff' : 'var(--text-main)',
                   padding: '0.75rem 1rem',
-                  borderRadius: m.sender === 'user' ? '16px 16px 2px 16px' : '16px 16px 16px 2px',
-                  border: m.sender === 'user' ? 'none' : '1px solid var(--border-color)',
+                  borderRadius: 'var(--radius-md)',
+                  boxShadow: m.sender === 'user' ? '0 4px 10px rgba(37, 99, 235, 0.35)' : 'var(--shadow-neu-sm)',
+                  border: '1px solid rgba(255, 255, 255, 0.8)',
                   fontSize: '0.88rem',
+                  fontWeight: 600,
                   lineHeight: 1.5,
                   whiteSpace: 'pre-line'
                 }}
@@ -158,7 +161,14 @@ export const AiAssistant = () => {
           </div>
 
           {/* Quick Prompts */}
-          <div style={{ padding: '0.5rem 1rem', display: 'flex', gap: '0.4rem', overflowX: 'auto', background: 'rgba(0,0,0,0.1)' }}>
+          <div style={{ 
+            padding: '0.5rem 0.85rem', 
+            display: 'flex', 
+            gap: '0.5rem', 
+            overflowX: 'auto', 
+            background: 'var(--bg-primary)', 
+            boxShadow: 'var(--shadow-neu-inset)' 
+          }}>
             {quickPrompts.map((p, idx) => (
               <button
                 key={idx}
@@ -166,11 +176,13 @@ export const AiAssistant = () => {
                 style={{
                   whiteSpace: 'nowrap',
                   fontSize: '0.72rem',
-                  padding: '0.3rem 0.6rem',
+                  fontWeight: 700,
+                  padding: '0.35rem 0.75rem',
                   borderRadius: 'var(--radius-full)',
-                  background: 'var(--primary-light)',
-                  color: 'var(--primary)',
-                  border: '1px solid rgba(59,130,246,0.3)',
+                  background: 'var(--bg-primary)',
+                  color: 'var(--text-main)',
+                  border: '1px solid rgba(255, 255, 255, 0.8)',
+                  boxShadow: 'var(--shadow-neu-sm)',
                   cursor: 'pointer'
                 }}
               >
@@ -181,8 +193,9 @@ export const AiAssistant = () => {
 
           {/* Input Box */}
           <div style={{
-            padding: '0.75rem 1rem',
-            borderTop: '1px solid var(--border-color)',
+            padding: '0.85rem 1rem',
+            background: 'var(--bg-primary)',
+            borderTop: '1px solid rgba(255, 255, 255, 0.8)',
             display: 'flex',
             alignItems: 'center',
             gap: '0.5rem'
@@ -194,7 +207,7 @@ export const AiAssistant = () => {
               onChange={(e) => setInput(e.target.value)}
               onKeyDown={(e) => e.key === 'Enter' && handleSend()}
               className="form-input"
-              style={{ padding: '0.5rem 0.85rem', fontSize: '0.85rem' }}
+              style={{ padding: '0.55rem 0.95rem', fontSize: '0.85rem' }}
             />
             <button
               onClick={() => handleSend()}
