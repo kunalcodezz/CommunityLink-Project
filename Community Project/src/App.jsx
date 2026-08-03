@@ -37,6 +37,13 @@ const MainLayout = () => {
     closeRoleSelectionModal
   } = useApp();
 
+  // Auto-redirect away from landing page when user is logged in
+  React.useEffect(() => {
+    if (isLoggedIn && activeTab === 'landing') {
+      setActiveTab('dashboard');
+    }
+  }, [isLoggedIn, activeTab]);
+
   const renderDashboardScreen = () => {
     if (!isLoggedIn) {
       return (
@@ -101,8 +108,8 @@ const MainLayout = () => {
 
   return (
     <div className="app-container">
-      {/* Render Navbar on tab screens other than landing */}
-      {activeTab !== 'landing' && <Navbar activeTab={activeTab} setActiveTab={setActiveTab} />}
+      {/* Render Floating Navbar on all screens */}
+      <Navbar activeTab={activeTab} setActiveTab={setActiveTab} />
 
       <main className={activeTab === 'landing' ? '' : 'main-content'}>
         {activeTab === 'landing' && (
@@ -119,7 +126,7 @@ const MainLayout = () => {
         {activeTab === 'dashboard' && renderDashboardScreen()}
       </main>
 
-      <AiAssistant />
+      {isLoggedIn && <AiAssistant />}
       {activeTab !== 'landing' && <Footer />}
 
       <LoginModal 

@@ -3,8 +3,12 @@ import { Bot, X, Send, Sparkles, User } from 'lucide-react';
 import { useApp } from '../context/AppContext';
 
 export const AiAssistant = () => {
-  const { missions, currentUserRole } = useApp();
+  const { missions, currentUserRole, isLoggedIn } = useApp();
   const [isOpen, setIsOpen] = useState(false);
+
+  if (!isLoggedIn) {
+    return null;
+  }
   const [messages, setMessages] = useState([
     {
       id: 1,

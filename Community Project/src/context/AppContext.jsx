@@ -258,7 +258,7 @@ export const AppProvider = ({ children }) => {
     { id: "n3", title: "New Nearby Mission", message: "Red Cross announced a Blood Donation Drive near Parel.", read: true, time: "1 day ago" }
   ]);
 
-  const [theme, setTheme] = useState('dark'); // 'dark' | 'light'
+  const [theme, setTheme] = useState('light'); // Always light mode
   const [accessibilityMode, setAccessibilityMode] = useState('normal'); // 'normal' | 'high-contrast' | 'large-text'
   const [language, setLanguage] = useState('en'); // 'en' | 'hi' | 'mr'
 
