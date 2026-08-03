@@ -46,6 +46,11 @@ export const Navbar = ({ activeTab, setActiveTab }) => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  // Do not render Navbar if user is logged out
+  if (!isLoggedIn) {
+    return null;
+  }
+
   const getUserDisplayName = () => {
     if (firebaseUser) {
       return firebaseUser.displayName || firebaseUser.email || 'User';

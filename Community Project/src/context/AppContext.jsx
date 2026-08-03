@@ -435,6 +435,10 @@ export const AppProvider = ({ children }) => {
 
   // Actions: Add Post & Like Post
   const createCommunityPost = (content, image) => {
+    if (!isLoggedIn) {
+      openAuthModal('feed');
+      return;
+    }
     const newPost = {
       id: `post-${Date.now()}`,
       authorName: currentUserRole === 'ngo' ? ngoProfile.name : studentProfile.name,
@@ -452,10 +456,18 @@ export const AppProvider = ({ children }) => {
   };
 
   const likePost = (postId) => {
+    if (!isLoggedIn) {
+      openAuthModal('feed');
+      return;
+    }
     setPosts(prev => prev.map(p => p.id === postId ? { ...p, likes: p.likes + 1 } : p));
   };
 
   const addCommentToPost = (postId, text) => {
+    if (!isLoggedIn) {
+      openAuthModal('feed');
+      return;
+    }
     const author = currentUserRole === 'ngo' ? ngoProfile.name : studentProfile.name;
     setPosts(prev => prev.map(p => {
       if (p.id === postId) {

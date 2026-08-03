@@ -86,10 +86,10 @@ const MainLayout = () => {
               </button>
 
               <button 
-                onClick={() => setActiveTab('feed')}
+                onClick={() => setActiveTab('explore')}
                 className="btn btn-secondary btn-lg"
               >
-                <Sparkles size={20} /> Back to Community Feed
+                <Sparkles size={20} /> Explore Missions
               </button>
             </div>
           </div>
@@ -106,10 +106,66 @@ const MainLayout = () => {
     }
   };
 
+  const renderFeedScreen = () => {
+    if (!isLoggedIn) {
+      return (
+        <div style={{ maxWidth: '650px', margin: '3rem auto', textAlign: 'center' }}>
+          <div className="glass-card" style={{ padding: '3rem 2rem' }}>
+            <div style={{
+              width: '64px',
+              height: '64px',
+              borderRadius: '20px',
+              background: 'var(--bg-primary)',
+              boxShadow: 'var(--shadow-neu-sm)',
+              color: 'var(--primary)',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              margin: '0 auto 1.5rem auto'
+            }}>
+              <Lock size={32} />
+            </div>
+
+            <span className="badge badge-blue" style={{ marginBottom: '1rem' }}>
+              <ShieldCheck size={14} /> Authentication Required
+            </span>
+
+            <h2 style={{ fontSize: '2rem', fontWeight: 800, marginBottom: '0.75rem', color: 'var(--text-main)' }}>
+              Access Community Feed
+            </h2>
+
+            <p style={{ color: 'var(--text-muted)', fontSize: '1rem', lineHeight: 1.6, marginBottom: '2rem' }}>
+              Log in or create an account to view community updates, volunteer achievements, photos, and social impact stories.
+            </p>
+
+            <div style={{ display: 'flex', justifyContent: 'center', gap: '1rem', flexWrap: 'wrap' }}>
+              <button 
+                onClick={() => openAuthModal('feed')}
+                className="btn btn-primary btn-lg pulse-glow"
+                style={{ fontWeight: 700 }}
+              >
+                <LogIn size={20} /> Log In to Access Feed
+              </button>
+
+              <button 
+                onClick={() => setActiveTab('explore')}
+                className="btn btn-secondary btn-lg"
+              >
+                <Sparkles size={20} /> Explore Missions
+              </button>
+            </div>
+          </div>
+        </div>
+      );
+    }
+
+    return <CommunityFeed />;
+  };
+
   return (
     <div className="app-container">
-      {/* Render Floating Navbar on all screens */}
-      <Navbar activeTab={activeTab} setActiveTab={setActiveTab} />
+      {/* Render Floating Navbar only when user is logged in */}
+      {isLoggedIn && <Navbar activeTab={activeTab} setActiveTab={setActiveTab} />}
 
       <main className={activeTab === 'landing' ? '' : 'main-content'}>
         {activeTab === 'landing' && (
@@ -122,7 +178,7 @@ const MainLayout = () => {
         {activeTab === 'explore' && <MissionExplorer />}
         {activeTab === 'map' && <InteractiveMap />}
         {activeTab === 'leaderboard' && <Leaderboard />}
-        {activeTab === 'feed' && <CommunityFeed />}
+        {activeTab === 'feed' && renderFeedScreen()}
         {activeTab === 'dashboard' && renderDashboardScreen()}
       </main>
 
