@@ -450,6 +450,7 @@ export const AppProvider = ({ children }) => {
       content,
       image,
       likes: 0,
+      likedBy: [],
       comments: []
     };
     setPosts(prev => [newPost, ...prev]);
@@ -460,7 +461,17 @@ export const AppProvider = ({ children }) => {
       openAuthModal('feed');
       return;
     }
-    setPosts(prev => prev.map(p => p.id === postId ? { ...p, likes: p.likes + 1 } : p));
+    const userId = firebaseUser?.uid || 'local-user';
+    setPosts(prev => prev.map(p => {
+      if (p.id !== postId) return p;
+      const likedBy = p.likedBy || [];
+      const alreadyLiked = likedBy.includes(userId);
+      return {
+        ...p,
+        likes: alreadyLiked ? p.likes - 1 : p.likes + 1,
+        likedBy: alreadyLiked ? likedBy.filter(id => id !== userId) : [...likedBy, userId]
+      };
+    }));
   };
 
   const addCommentToPost = (postId, text) => {
