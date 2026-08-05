@@ -37,12 +37,16 @@ const MainLayout = () => {
     closeRoleSelectionModal
   } = useApp();
 
-  // Auto-redirect away from landing page when user is logged in
+  // Auto-redirect navigation based on auth state & role
   React.useEffect(() => {
-    if (isLoggedIn && activeTab === 'landing') {
-      setActiveTab('dashboard');
+    if (isLoggedIn) {
+      if (activeTab === 'landing' || (currentUserRole === 'ngo' && activeTab === 'explore')) {
+        setActiveTab('dashboard');
+      }
+    } else {
+      setActiveTab('landing');
     }
-  }, [isLoggedIn, activeTab]);
+  }, [isLoggedIn, currentUserRole, activeTab]);
 
   const renderDashboardScreen = () => {
     if (!isLoggedIn) {
@@ -98,11 +102,11 @@ const MainLayout = () => {
     }
 
     switch (currentUserRole) {
-      case 'student': return <StudentDashboard />;
+      case 'student': return <StudentDashboard setActiveTab={setActiveTab} />;
       case 'ngo': return <NgoDashboard />;
       case 'resident': return <ResidentDashboard />;
       case 'admin': return <AdminDashboard />;
-      default: return <StudentDashboard />;
+      default: return <StudentDashboard setActiveTab={setActiveTab} />;
     }
   };
 

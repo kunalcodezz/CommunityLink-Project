@@ -100,7 +100,7 @@ export const AdminDashboard = () => {
 
         <div className="glass-card">
           <div style={{ fontSize: '0.8rem', color: 'var(--text-muted)', marginBottom: '0.3rem' }}>Official Certificates Issued</div>
-          <div style={{ fontSize: '1.8rem', fontWeight: 800, color: 'var(--accent-amber)' }}>{certificates.length + 420}</div>
+          <div style={{ fontSize: '1.8rem', fontWeight: 800, color: 'var(--accent-amber)' }}>{certificates.length}</div>
           <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)', marginTop: '0.2rem' }}>100% QR Verified</div>
         </div>
 

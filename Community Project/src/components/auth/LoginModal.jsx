@@ -11,7 +11,6 @@ import {
   Lock, 
   ArrowRight,
   UserPlus,
-  Flame,
   AlertCircle
 } from 'lucide-react';
 
@@ -73,7 +72,7 @@ export const LoginModal = ({ isOpen, onClose, targetTab, setActiveTab }) => {
     setErrorMessage('');
 
     if (!email.trim() || !password.trim()) {
-      setErrorMessage('Please enter both Email and Password to authenticate with Firebase.');
+      setErrorMessage('Please enter both Email and Password to continue.');
       return;
     }
 
@@ -109,7 +108,7 @@ export const LoginModal = ({ isOpen, onClose, targetTab, setActiveTab }) => {
       }
       onClose();
     } catch (err) {
-      setErrorMessage(err.message || 'Firebase Authentication failed.');
+      setErrorMessage(err.message || 'Authentication failed.');
     } finally {
       setIsSubmitting(false);
     }
@@ -162,7 +161,7 @@ export const LoginModal = ({ isOpen, onClose, targetTab, setActiveTab }) => {
           <X size={18} />
         </button>
 
-        {/* Header Badge & Logo */}
+        {/* Header Logo & Title */}
         <div style={{ textAlign: 'center', marginBottom: '1.25rem' }}>
           <img 
             src="/logo.png" 
@@ -176,32 +175,12 @@ export const LoginModal = ({ isOpen, onClose, targetTab, setActiveTab }) => {
               boxShadow: 'var(--shadow-neu-sm)'
             }}
           />
-          <div>
-            <div style={{
-              display: 'inline-flex',
-              alignItems: 'center',
-              gap: '0.4rem',
-              padding: '0.35rem 0.85rem',
-              borderRadius: 'var(--radius-full)',
-              background: 'var(--bg-primary)',
-              boxShadow: 'var(--shadow-neu-sm)',
-              border: '1px solid rgba(255, 255, 255, 0.8)',
-              color: '#ff6b00',
-              fontSize: '0.75rem',
-              fontWeight: 800,
-              textTransform: 'uppercase',
-              letterSpacing: '0.05em',
-              marginBottom: '0.75rem'
-            }}>
-              <Flame size={13} /> Firebase Authentication
-            </div>
-          </div>
 
           <h3 style={{ fontSize: '1.6rem', fontWeight: 800, marginBottom: '0.35rem', color: 'var(--text-main)' }}>
-            {authMode === 'signin' ? 'Firebase Sign In' : 'Create Firebase Account'}
+            {authMode === 'signin' ? 'Sign In' : 'Create Account'}
           </h3>
           <p style={{ color: 'var(--text-muted)', fontSize: '0.88rem' }}>
-            Only authenticated Firebase accounts can enter user profiles.
+            {authMode === 'signin' ? 'Welcome back! Please enter your details.' : 'Join CommunityLink to start your social impact journey.'}
           </p>
         </div>
 
@@ -262,7 +241,7 @@ export const LoginModal = ({ isOpen, onClose, targetTab, setActiveTab }) => {
           </button>
         </div>
 
-        {/* Firebase Google Auth Button */}
+        {/* Google Auth Button */}
         <button
           type="button"
           onClick={handleGoogleSignIn}
@@ -287,7 +266,7 @@ export const LoginModal = ({ isOpen, onClose, targetTab, setActiveTab }) => {
             <path fill="#FBBC05" d="M5.28 14.27c-.25-.72-.38-1.49-.38-2.27s.13-1.55.38-2.27V6.58H1.26C.46 8.17 0 9.99 0 12s.46 3.83 1.26 5.42l4.02-3.15z"/>
             <path fill="#EA4335" d="M12 4.75c1.77 0 3.35.61 4.6 1.8l3.42-3.42C17.95 1.19 15.24 0 12 0 7.31 0 3.25 2.7 1.26 6.58l4.02 3.15c.95-2.83 3.6-4.98 6.72-4.98z"/>
           </svg>
-          Authenticate with Google (Firebase)
+          Continue with Google
         </button>
 
         <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '1.25rem' }}>
@@ -354,13 +333,13 @@ export const LoginModal = ({ isOpen, onClose, targetTab, setActiveTab }) => {
 
         {/* Credentials Form */}
         <form onSubmit={handleFormSubmit}>
-          {(authMode === 'signup' || selectedRole === 'student') && (
+          {authMode === 'signup' && (
             <div className="form-group" style={{ marginBottom: '0.75rem' }}>
               <label style={{ fontSize: '0.82rem', fontWeight: 600 }}>Full Name *</label>
               <input
                 type="text"
                 required
-                placeholder="e.g. Aarav Sharma"
+                placeholder="e.g. Alex Morgan"
                 value={displayName}
                 onChange={(e) => setDisplayName(e.target.value)}
                 className="form-input"
@@ -369,54 +348,35 @@ export const LoginModal = ({ isOpen, onClose, targetTab, setActiveTab }) => {
             </div>
           )}
 
-          {selectedRole === 'student' && (
-            <>
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.75rem' }}>
-                <div className="form-group" style={{ marginBottom: '0.75rem' }}>
-                  <label style={{ fontSize: '0.82rem', fontWeight: 600 }}>Date of Birth (DOB)</label>
-                  <input
-                    type="date"
-                    value={dob}
-                    onChange={(e) => setDob(e.target.value)}
-                    className="form-input"
-                    style={{ padding: '0.75rem 0.95rem', fontSize: '0.88rem' }}
-                  />
-                </div>
-
-                <div className="form-group" style={{ marginBottom: '0.75rem' }}>
-                  <label style={{ fontSize: '0.82rem', fontWeight: 600 }}>College / University</label>
-                  <input
-                    type="text"
-                    placeholder="e.g. VJTI / IIT Bombay"
-                    value={college}
-                    onChange={(e) => setCollege(e.target.value)}
-                    className="form-input"
-                    style={{ padding: '0.75rem 0.95rem', fontSize: '0.88rem' }}
-                  />
-                </div>
+          {authMode === 'signup' && selectedRole === 'student' && (
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.75rem', marginBottom: '0.75rem' }}>
+              <div className="form-group" style={{ marginBottom: 0 }}>
+                <label style={{ fontSize: '0.82rem', fontWeight: 600 }}>Date of Birth (DOB)</label>
+                <input
+                  type="date"
+                  value={dob}
+                  onChange={(e) => setDob(e.target.value)}
+                  className="form-input"
+                  style={{ padding: '0.75rem 0.95rem', fontSize: '0.85rem' }}
+                />
               </div>
 
-              <div className="form-group" style={{ marginBottom: '0.75rem' }}>
-                <label style={{ fontSize: '0.82rem', fontWeight: 600 }}>Education / Degree</label>
-                <select
-                  value={education}
-                  onChange={(e) => setEducation(e.target.value)}
-                  className="form-select"
-                  style={{ padding: '0.75rem 0.95rem', fontSize: '0.88rem' }}
-                >
-                  <option value="B.Tech / B.E.">B.Tech / B.E. (Engineering)</option>
-                  <option value="B.Sc / B.C.A.">B.Sc / B.C.A. (Science & IT)</option>
-                  <option value="B.A. / B.Com">B.A. / B.Com (Arts & Commerce)</option>
-                  <option value="Post Graduate (M.Tech / M.B.A. / M.Sc)">Post Graduate (M.Tech / M.B.A. / M.Sc)</option>
-                  <option value="High School / Diploma">High School / Diploma</option>
-                  <option value="Other Degree">Other Degree</option>
-                </select>
+              <div className="form-group" style={{ marginBottom: 0 }}>
+                <label style={{ fontSize: '0.82rem', fontWeight: 600 }}>College / University</label>
+                <input
+                  type="text"
+                  placeholder="e.g. VJTI Mumbai"
+                  value={college}
+                  onChange={(e) => setCollege(e.target.value)}
+                  className="form-input"
+                  style={{ padding: '0.75rem 0.95rem', fontSize: '0.85rem' }}
+                />
               </div>
-            </>
+            </div>
           )}
 
           <div className="form-group" style={{ marginBottom: '0.75rem' }}>
-            <label style={{ fontSize: '0.82rem', fontWeight: 600 }}>Firebase Email</label>
+            <label style={{ fontSize: '0.82rem', fontWeight: 600 }}>Email Address</label>
             <div style={{ position: 'relative' }}>
               <input
                 type="email"
@@ -473,14 +433,14 @@ export const LoginModal = ({ isOpen, onClose, targetTab, setActiveTab }) => {
             style={{ width: '100%', padding: '0.85rem', fontSize: '0.95rem', fontWeight: 700 }}
           >
             {isSubmitting ? (
-              <span>Authenticating via Firebase Auth...</span>
+              <span>Authenticating...</span>
             ) : authMode === 'signin' ? (
               <>
-                <LogIn size={17} /> Sign In to Profile <ArrowRight size={17} />
+                <LogIn size={17} /> Sign In <ArrowRight size={17} />
               </>
             ) : (
               <>
-                <UserPlus size={17} /> Register Firebase Account <ArrowRight size={17} />
+                <UserPlus size={17} /> Create Account <ArrowRight size={17} />
               </>
             )}
           </button>

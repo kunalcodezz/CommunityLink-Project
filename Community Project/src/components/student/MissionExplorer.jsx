@@ -15,7 +15,7 @@ import {
 } from 'lucide-react';
 
 export const MissionExplorer = () => {
-  const { missions, joinMission, studentProfile } = useApp();
+  const { missions, joinMission, studentProfile, currentUserRole } = useApp();
   
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('All');
@@ -127,7 +127,7 @@ export const MissionExplorer = () => {
 
                   {/* Required Skills Chips */}
                   <div style={{ display: 'flex', gap: '0.4rem', flexWrap: 'wrap', marginBottom: '1rem' }}>
-                    {mission.requiredSkills.map(skill => (
+                    {(mission.requiredSkills || []).map(skill => (
                       <span key={skill} style={{ fontSize: '0.72rem', padding: '0.2rem 0.5rem', background: 'rgba(255,255,255,0.06)', borderRadius: 'var(--radius-sm)', color: 'var(--text-muted)' }}>
                         {skill}
                       </span>
@@ -161,18 +161,20 @@ export const MissionExplorer = () => {
                     Details
                   </button>
 
-                  {isJoined ? (
-                    <button className="btn btn-emerald btn-sm" style={{ flex: 1 }} disabled>
-                      <CheckCircle size={15} /> Registered
-                    </button>
-                  ) : (
-                    <button
-                      className="btn btn-primary btn-sm"
-                      style={{ flex: 1 }}
-                      onClick={() => joinMission(mission.id)}
-                    >
-                      Join Mission (+{mission.xpReward} XP)
-                    </button>
+                  {currentUserRole !== 'ngo' && currentUserRole !== 'admin' && (
+                    isJoined ? (
+                      <button className="btn btn-emerald btn-sm" style={{ flex: 1 }} disabled>
+                        <CheckCircle size={15} /> Registered
+                      </button>
+                    ) : (
+                      <button
+                        className="btn btn-primary btn-sm"
+                        style={{ flex: 1 }}
+                        onClick={() => joinMission(mission.id)}
+                      >
+                        Join Mission (+{mission.xpReward} XP)
+                      </button>
+                    )
                   )}
                 </div>
 
@@ -212,7 +214,7 @@ export const MissionExplorer = () => {
 
             <div style={{ display: 'flex', gap: '0.75rem', justifyContent: 'flex-end' }}>
               <button className="btn btn-secondary" onClick={() => setSelectedMissionForModal(null)}>Close</button>
-              {!studentProfile.joinedMissions.includes(selectedMissionForModal.id) && (
+              {currentUserRole !== 'ngo' && currentUserRole !== 'admin' && !studentProfile.joinedMissions.includes(selectedMissionForModal.id) && (
                 <button
                   className="btn btn-primary"
                   onClick={() => {

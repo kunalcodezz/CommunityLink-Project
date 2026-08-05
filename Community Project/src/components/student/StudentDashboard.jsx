@@ -16,10 +16,11 @@ import {
 } from 'lucide-react';
 import { CertificateModal } from '../certificate/CertificateModal';
 
-export const StudentDashboard = () => {
+export const StudentDashboard = ({ setActiveTab }) => {
   const { 
     studentProfile, 
     missions, 
+    joinMission,
     badges, 
     certificates, 
     submitMissionProof,
@@ -32,6 +33,7 @@ export const StudentDashboard = () => {
   const [proofNotes, setProofNotes] = useState('');
 
   const joinedMissionsList = missions.filter(m => studentProfile.joinedMissions.includes(m.id));
+  const availableMissionsList = missions.filter(m => !studentProfile.joinedMissions.includes(m.id));
 
   // XP Progress calculation
   const nextLevelXp = 600; // Level goal for 'Leader'
@@ -194,6 +196,63 @@ export const StudentDashboard = () => {
         </div>
       </div>
 
+      {/* Newly Posted & Available NGO Missions */}
+      <div>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem' }}>
+          <h3 style={{ fontSize: '1.25rem', fontWeight: 800, display: 'flex', alignItems: 'center', gap: '0.5rem', margin: 0 }}>
+            <Sparkles size={20} color="var(--primary)" /> Available NGO Social Impact Missions
+          </h3>
+          {setActiveTab && (
+            <button 
+              onClick={() => setActiveTab('explore')}
+              className="btn btn-secondary btn-sm"
+              style={{ fontSize: '0.8rem', fontWeight: 700 }}
+            >
+              View All in Missions Tab →
+            </button>
+          )}
+        </div>
+
+        {availableMissionsList.length === 0 ? (
+          <div className="glass-card" style={{ padding: '1.5rem', textAlign: 'center', color: 'var(--text-muted)' }}>
+            🎉 You have registered for all available missions! Check back as NGOs publish new initiatives.
+          </div>
+        ) : (
+          <div className="grid-2">
+            {availableMissionsList.slice(0, 4).map(mission => (
+              <div key={mission.id} className="glass-card" style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
+                <div>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '0.5rem' }}>
+                    <span className="badge badge-blue">{mission.category}</span>
+                    <span className="badge badge-emerald">+{mission.xpReward} XP</span>
+                  </div>
+                  <h4 style={{ fontSize: '1.1rem', fontWeight: 700, marginBottom: '0.4rem', color: 'var(--text-main)' }}>{mission.title}</h4>
+                  <p style={{ fontSize: '0.85rem', color: 'var(--text-muted)', marginBottom: '0.5rem' }}>
+                    Organized by <strong style={{ color: 'var(--primary)' }}>{mission.ngoName}</strong>
+                  </p>
+                  <p style={{ fontSize: '0.82rem', color: 'var(--text-muted)', marginBottom: '0.85rem' }}>
+                    📍 {mission.location} • 📅 {mission.date}
+                  </p>
+                </div>
+
+                <div style={{ borderTop: '1px solid var(--border-color)', paddingTop: '0.75rem', marginTop: '0.5rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                  <span style={{ fontSize: '0.78rem', color: 'var(--accent-emerald)', fontWeight: 700 }}>
+                    {mission.slotsAvailable} slots left
+                  </span>
+                  <button
+                    onClick={() => joinMission(mission.id)}
+                    className="btn btn-primary btn-sm"
+                    style={{ fontWeight: 700 }}
+                  >
+                    Join Mission (+{mission.xpReward} XP)
+                  </button>
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
+
       {/* Joined Missions & Verification Status */}
       <div>
         <h3 style={{ fontSize: '1.25rem', fontWeight: 800, marginBottom: '1rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
@@ -203,7 +262,7 @@ export const StudentDashboard = () => {
         {joinedMissionsList.length === 0 ? (
           <div className="glass-card" style={{ textAlign: 'center', padding: '3rem 1.5rem' }}>
             <p style={{ color: 'var(--text-muted)', marginBottom: '1rem' }}>You haven't joined any social impact missions yet.</p>
-            <button onClick={() => window.location.hash = '#explore'} className="btn btn-primary">
+            <button onClick={() => setActiveTab && setActiveTab('explore')} className="btn btn-primary">
               Explore Active Missions
             </button>
           </div>

@@ -3,7 +3,7 @@ import { useApp } from '../../context/AppContext';
 import { MapPin, Navigation, Filter, Layers, CheckCircle } from 'lucide-react';
 
 export const InteractiveMap = () => {
-  const { missions, residentIssues, joinMission, studentProfile } = useApp();
+  const { missions, residentIssues, joinMission, studentProfile, currentUserRole } = useApp();
   const [filterType, setFilterType] = useState('all'); // 'all' | 'missions' | 'issues'
   const [selectedPin, setSelectedPin] = useState(null);
 
@@ -195,7 +195,7 @@ export const InteractiveMap = () => {
                 {selectedPin.data.description}
               </p>
 
-              {selectedPin.type === 'mission' && (
+              {selectedPin.type === 'mission' && currentUserRole !== 'ngo' && currentUserRole !== 'admin' && (
                 <div>
                   {!studentProfile.joinedMissions.includes(selectedPin.data.id) ? (
                     <button

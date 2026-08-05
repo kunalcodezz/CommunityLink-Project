@@ -192,19 +192,12 @@ export const AppProvider = ({ children }) => {
       college: "VJTI Mumbai",
       education: "B.Tech Computer Engineering",
       isSetupComplete: true,
-      xp: 450,
-      level: "Volunteer",
-      hoursLogged: 16,
-      badges: ["b-1", "b-2"],
-      joinedMissions: ["m-1"],
-      submittedProofs: [
-        {
-          missionId: "m-1",
-          proofImage: "https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?w=600&auto=format&fit=crop&q=80",
-          notes: "Gathered 4 bags of plastic and planted 2 neem saplings with team B.",
-          status: "approved"
-        }
-      ]
+      xp: 0,
+      level: "Beginner",
+      hoursLogged: 0,
+      badges: [],
+      joinedMissions: [],
+      submittedProofs: []
     };
   });
 
@@ -223,13 +216,29 @@ export const AppProvider = ({ children }) => {
   const closeStudentSetupModal = () => setIsStudentSetupModalOpen(false);
 
 
-  const [ngoProfile, setNgoProfile] = useState({
-    id: "ngo-1",
-    name: "Green Earth Alliance",
-    registrationNo: "NGO-MH-2018-9942",
-    contactEmail: "contact@greenearth.org",
-    verified: true
+  const [ngoProfile, setNgoProfile] = useState(() => {
+    const saved = localStorage.getItem('cl_ngoProfile');
+    return saved ? JSON.parse(saved) : {
+      id: "ngo-1",
+      name: "Green Earth Alliance",
+      registrationNo: "NGO-MH-2018-9942",
+      contactEmail: "contact@greenearth.org",
+      phone: "+91 98765 43210",
+      city: "Mumbai",
+      website: "https://greenearth.org",
+      description: "Dedicated to environmental conservation, mangrove protection, and youth eco-drives.",
+      verified: true
+    };
   });
+
+  const updateNgoProfile = (updatedDetails) => {
+    setNgoProfile(prev => {
+      const next = { ...prev, ...updatedDetails };
+      localStorage.setItem('cl_ngoProfile', JSON.stringify(next));
+      return next;
+    });
+    addNotification("Profile Saved", "NGO organization profile details updated successfully.");
+  };
 
   // App Data Collections
   const [missions, setMissions] = useState(() => {
@@ -407,6 +416,13 @@ export const AppProvider = ({ children }) => {
     addNotification("Mission Published", `Your mission '${newMission.title}' is now live for students to join!`);
   };
 
+  // Actions: NGO Delete Mission
+  const deleteMission = (missionId) => {
+    const targetMission = missions.find(m => m.id === missionId);
+    setMissions(prev => prev.filter(m => m.id !== missionId));
+    addNotification("Mission Deleted", `The mission '${targetMission ? targetMission.title : 'Selected mission'}' has been deleted.`);
+  };
+
   // Actions: Resident Report Issue
   const reportIssue = (issueData) => {
     const newIssue = {
@@ -531,6 +547,7 @@ export const AppProvider = ({ children }) => {
         confirmGoogleUserRole,
         closeRoleSelectionModal,
         ngoProfile,
+        updateNgoProfile,
         missions,
         badges: initialBadges,
         leaderboard: initialLeaderboard,
@@ -548,6 +565,7 @@ export const AppProvider = ({ children }) => {
         submitMissionProof,
         approveStudentProof,
         createMission,
+        deleteMission,
         reportIssue,
         upvoteIssue,
         createCommunityPost,
